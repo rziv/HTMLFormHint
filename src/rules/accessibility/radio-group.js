@@ -1,5 +1,5 @@
 HTMLHint.addRule({
-    id: 'radio-group',
+    id: 'radio-group-acceessibility',
     description: 'group of radio buttons should have role of radiogroup. every radio button should have radio role',
     init: function(parser, reporter){
         var isRadiogroupContainer = function(event) { 
@@ -9,6 +9,7 @@ HTMLHint.addRule({
                 return false;
             }
             var classesArray = classNames.value.split(/\s+/g);
+            // No need in to always iterate the whole array , use some() instaed of forEach
             classesArray.forEach(function(className){
                 if(className.toLowerCase() ==="radio" ){
                     isRadioClassExist = true;
@@ -17,55 +18,45 @@ HTMLHint.addRule({
             return isRadioClassExist;
         };
         var isRadioInput = function(event){
-            var typeValue = HTMLHint.utils.getAttribute(event.attrs,"type");
-            return typeValue && typeValue.value === 'radio';
+            return HTMLHint.utils.getAttribute(event.attrs,"type")  === 'radio';          
         };
 
         var prevEvent;
         var self = this;   
 
-        var radioContainerNotHaveAriaLabelledbyAttr = function(event){
+        var isRadioContainerWithoutAriaAttribute = function(event){
             var ariaLabelAttribute = HTMLHint.utils.getAttribute(event.attrs,"aria-labelledby");
             return isRadiogroupContainer(event) && (!ariaLabelAttribute || ariaLabelAttribute.value === '');
         };
-        var radioContainerNotHaveRoleAttr = function(event){
+        var isRadioContainerWithoutRoleAttribute = function(event){
             var roleAttribute = HTMLHint.utils.getAttribute(event.attrs,"role");
             return isRadiogroupContainer(event) && (!roleAttribute || roleAttribute.value !== 'radiogroup');
         };
-        var radioNotWrpaWithDiv = function(event, prevEvent){
+        var isRadioNotWrappedWithDiv = function(event, prevEvent){
             return isRadioInput(event) && prevEvent.tagName.toLowerCase() !== 'div';
         };
 
-        var radioNotHaveRadioRole = function(event){
+        var isRadioWithoutRadioRole = function(event){
             var roleAttribute = HTMLHint.utils.getAttribute(event.attrs,"role");
             return isRadioInput(event) && (!roleAttribute || roleAttribute.value !== 'radio');
         };
         
         parser.addListener('tagstart', function(event){
-            if (radioContainerNotHaveRoleAttr(event))
+            if (isRadioContainerWithoutRoleAttribute(event))
             {
-               reporter.error('radiogroup container should have role attr with radiogroup value' + event.line , event.line, event.col, self, event.raw);
+               reporter.error('radiogroup container should have role attribute with radiogroup value' + event.line , event.line, event.col, self, event.raw);
             }  
-            if (radioContainerNotHaveAriaLabelledbyAttr(event))
+            if (isRadioContainerWithoutAriaAttribute(event))
             {
                reporter.error('radiogroup container should have aria-labelledby attribute with value' + event.line , event.line, event.col, self, event.raw);
             }   
-            if(radioNotWrpaWithDiv(event, prevEvent)){
-               reporter.error('radio input shold be wrap with div element' + event.line , event.line, event.col, self, event.raw);
+            if(isRadioNotWrappedWithDiv(event, prevEvent)){
+               reporter.error('radio input should be wrap with div element' + event.line , event.line, event.col, self, event.raw);
             }
-            if(radioNotHaveRadioRole(event)){
-                reporter.error('radio input shold have  role attribute with radio value' + event.line , event.line, event.col, self, event.raw);    
+            if(isRadioWithoutRadioRole(event)){
+                reporter.error('radio input should have role attribute with radio value' + event.line , event.line, event.col, self, event.raw);    
             }
             prevEvent = event;
-        });
-        //parser.addListener('tagend', function(event){
-        //    var tagName = event.tagName.toLowerCase();          
-          //  if (tagName === "table" && unclosedTablesCounter>0) {
-            //    unclosedTablesCounter--;
-           // }
-           // if (unclosedTablesCounter === 0)  {
-             //   inTable = false;
-           // }        
-        //});       
+        });         
     }
 });
