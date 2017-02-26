@@ -1,44 +1,40 @@
 HTMLHint.addRule({
     id: 'radio-group-acceessibility',
-    description: 'group of radio buttons should have role of radiogroup. every radio button should have radio role',
+    description: 'group of radio buttons should have role of radiogroup and aria-labelledby attribute. every radio button should have radio role',
     init: function(parser, reporter){
         var isRadiogroupContainer = function(event) { 
-            var isRadioClassExist = false;
-            var classNames = HTMLHint.utils.getAttribute(event.attrs,"class");
-            if(!classNames){
-                return false;
-            }
-            var classesArray = classNames.value.split(/\s+/g);
-            // No need in to always iterate the whole array , use some() instaed of forEach
-            classesArray.forEach(function(className){
-                if(className.toLowerCase() ==="radio" ){
-                    isRadioClassExist = true;
-                }
-            });
-            return isRadioClassExist;
+            var classNames = HTMLHint.utils.getAttributeValue(event.attrs,"class");
+            var classesArray = classNames.split(/\s+/g);
+            return classesArray.some( className => className.toLowerCase() ==="radio");
         };
+
         var isRadioInput = function(event){
-            return HTMLHint.utils.getAttribute(event.attrs,"type")  === 'radio';          
+            return HTMLHint.utils.getAttributeValue(event.attrs,"type")  === 'radio';          
+        };
+
+        var isRadioBindWithoutRaiogroupAccessibility = function(event){
+            var bindAttributeValue = HTMLHint.utils.getAttributeValue(event.attrs,"data-bind");
+            return isRadioInput(event) && (!bindAttributeValue.includes('radioGroupAccessibility'));
         };
 
         var prevEvent;
         var self = this;   
 
         var isRadioContainerWithoutAriaAttribute = function(event){
-            var ariaLabelAttribute = HTMLHint.utils.getAttribute(event.attrs,"aria-labelledby");
-            return isRadiogroupContainer(event) && (!ariaLabelAttribute || ariaLabelAttribute.value === '');
+            var ariaLabelAttribute = HTMLHint.utils.getAttributeValue(event.attrs,"aria-labelledby");
+            return isRadiogroupContainer(event) && ariaLabelAttribute === '';
         };
         var isRadioContainerWithoutRoleAttribute = function(event){
-            var roleAttribute = HTMLHint.utils.getAttribute(event.attrs,"role");
-            return isRadiogroupContainer(event) && (!roleAttribute || roleAttribute.value !== 'radiogroup');
+            var roleAttribute = HTMLHint.utils.getAttributeValue(event.attrs,"role");
+            return isRadiogroupContainer(event) && roleAttribute !== 'radiogroup';
         };
         var isRadioNotWrappedWithDiv = function(event, prevEvent){
             return isRadioInput(event) && prevEvent.tagName.toLowerCase() !== 'div';
         };
 
         var isRadioWithoutRadioRole = function(event){
-            var roleAttribute = HTMLHint.utils.getAttribute(event.attrs,"role");
-            return isRadioInput(event) && (!roleAttribute || roleAttribute.value !== 'radio');
+            var roleAttribute = HTMLHint.utils.getAttributeValue(event.attrs,"role");
+            return isRadioInput(event) && roleAttribute !== 'radio';
         };
         
         parser.addListener('tagstart', function(event){
@@ -55,6 +51,9 @@ HTMLHint.addRule({
             }
             if(isRadioWithoutRadioRole(event)){
                 reporter.error('radio input should have role attribute with radio value' + event.line , event.line, event.col, self, event.raw);    
+            }
+            if(isRadioBindWithoutRaiogroupAccessibility(event)){
+                reporter.error('radio input should have radioGroupAccessibility binding' + event.line , event.line, event.col, self, event.raw);                    
             }
             prevEvent = event;
         });         

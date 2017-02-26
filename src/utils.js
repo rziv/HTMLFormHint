@@ -24,9 +24,15 @@
         return undefined;
     };
 
+    const getAttributeValue = function(attributes, attributeName) {
+        var attributeObject = getAttribute(attributes, attributeName);
+        return attributeObject ? attributeObject.value : '';
+    };
+
     HTMLHint.utils = {
         isAttributeExists,
-        getAttribute
+        getAttribute,
+        getAttributeValue
     };
 
 })(HTMLHint);
