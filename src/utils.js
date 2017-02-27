@@ -25,7 +25,7 @@
     };
 
     const getAttributeValue = function(attributes, attributeName) {
-        var attributeObject = getAttribute(attributes, attributeName);
+        let attributeObject = getAttribute(attributes, attributeName);
         return attributeObject ? attributeObject.value : '';
     };
 
