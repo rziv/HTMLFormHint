@@ -2,14 +2,14 @@ HTMLHint.addRule({
     id: 'validation-message-accessibility',
     description: 'verify that all span of validation message have ID and attribute "aria-live"',
     init: function (parser, reporter) {
-
+        var self = this;
         var isValidationMessage = function (element, attributes) {
             return (element === "span" && HTMLHint.utils.isClassExsits(attributes, "validationMessage"));
         };
 
         parser.addListener('tagstart', function (event) {
             var tagName = event.tagName.toLowerCase();
-            var self = this;
+
             if (isValidationMessage(tagName, event.attrs)) {
                 var id = HTMLHint.utils.getAttributeValue(event.attrs, "id");
                 var ariaLiveAttr = HTMLHint.utils.getAttributeValue(event.attrs, "aria-live");
