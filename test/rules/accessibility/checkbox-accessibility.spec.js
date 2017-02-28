@@ -57,5 +57,19 @@ describe('Rules: '+ruldId, function(){
         var messages = HTMLHint.verify(code, ruleOptions);
         expect(messages.length).to.be(1);
     });
+    it('both checkbox group and single checkbox in one container', function(){
+        var code = `<div>
+                        <div class="checkbox-group-container" role="group" aria-labelledby="radioLabel">
+                            <input type="checkbox" data-bind="checkboxAccessibility: true" />
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" data-bind="attr:{'aria-checked': true}" />
+                        </div>
+
+                    </div>
+                    `;
+        var messages = HTMLHint.verify(code, ruleOptions);
+        expect(messages.length).to.be(0);
+    });
 });
 
