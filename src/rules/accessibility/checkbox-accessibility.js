@@ -1,6 +1,6 @@
 HTMLHint.addRule({
     id: 'checkbox-acceessibility',
-    description: 'verify checkbox has ',
+    description: 'verify checkbox group container has role and aria-labelledby attributes, and checkbox input has accessibility bindings.',
     init: function(parser, reporter){
         var unclosedDivsCounter = 0;
         var inCheckboxGroup = false;
