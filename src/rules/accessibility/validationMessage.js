@@ -14,10 +14,10 @@ HTMLHint.addRule({
                 var id = HTMLHint.utils.getAttributeValue(event.attrs, "id");
                 var ariaLiveAttr = HTMLHint.utils.getAttributeValue(event.attrs, "aria-live");
 
-                if (!id || !id.startsWith("vmsg_")) {
+                if (!id || !id.startsWith(HTMLHint.resources.validationMessagesAccessibility.messageIdPrefix)) {
                     reporter.error('span with class validationMessage must have ID that starts with "vmsg_" ' + event.line, event.line, event.col, self, event.raw);
                 }
-                if (ariaLiveAttr !== 'assertive') {
+                if (ariaLiveAttr !== HTMLHint.resources.validationMessagesAccessibility.ariaLive) {
                     reporter.error('span with class validationMessage must have attribute aria-live="assertive" ' + event.line, event.line, event.col, self, event.raw);
                 }
             }
