@@ -11,22 +11,25 @@ HTMLHint.addRule({
             if (typeof val !== 'string') {
                 return;
             }
-            return val().replace(/ /g, '');
-        }
+            return val.replace(/ /g, '');
+        };
 
         var isContainerWithoutAttrBinding = function (bindings) {
+            if (!bindings) {
+                return false;
+            }
             return !bindings.includes('attr');
         };
 
-        var isContainerWithoutAriaLabeledbyBinding = function (bindings, requestedBind) {
+        var isContainerWithoutAriaLabelBinding = function (bindings) {
             var ariaLabelBinding = trimAll(HTMLHint.resources.containersAccessibility.ariaLabelBinding);
-            return isContainerWithoutAttrBinding() || !bindings.includes(ariaLabelBinding);
+            return isContainerWithoutAttrBinding(bindings) || !bindings.includes(ariaLabelBinding);
         };
 
-        var isContainerWithoutIdBinding = function (bindings, requestedBind) {
-           var idBinding = trimAll(HTMLHint.resources.containersAccessibility.idBinding);
-            return isContainerWithoutAttrBinding() || !bindings.includes(idBinding);
-        }
+        var isContainerWithoutIdBinding = function (bindings) {
+            var idBinding = trimAll(HTMLHint.resources.containersAccessibility.idBinding);
+            return isContainerWithoutAttrBinding(bindings) || !bindings.includes(idBinding);
+        };
         parser.addListener('tagstart', function (event) {
             var tagName = event.tagName.toLowerCase();
 
@@ -37,11 +40,11 @@ HTMLHint.addRule({
                     reporter.error('div with class container should have role "tabpanel"', event.line, event.col, self, event.raw);
                 }
 
-                if (bindingContains(dataBindings, 'tabpanel_')) {
+                if (isContainerWithoutIdBinding(dataBindings)) {
                     reporter.error('div with class container should have attr binding of id that starts with "tabpanel_"', event.line, event.col, self, event.raw);
                 }
 
-                if (bindingContains(dataBindings, 'tab_')) {
+                if (isContainerWithoutAriaLabelBinding(dataBindings)) {
                     reporter.error('div with class container should have attr binding of aria-labeledby to an id that starts with "tab_"', event.line, event.col, self, event.raw);
                 }
             }
