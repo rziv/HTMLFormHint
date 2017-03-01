@@ -25,8 +25,8 @@
     };
 
     const getAttributeValue = function (attributes, attributeName) {
-        let attrutesObject = getAttribute(attributes, attributeName);
-        return attrutesObject ? attrutesObject.value : '';
+        let attributeObject = getAttribute(attributes, attributeName);
+        return attributeObject ? attributeObject.value : '';
     };
 
     const isClassExsits = function (attributes, className) {
@@ -38,8 +38,8 @@
     HTMLHint.utils = {
         isAttributeExists,
         getAttribute,
-        getAttributeValue,
-        isClassExsits
+        isClassExsits,
+        getAttributeValue
     };
 
 })(HTMLHint);
