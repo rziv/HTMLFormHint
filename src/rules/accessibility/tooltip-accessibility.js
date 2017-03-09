@@ -3,47 +3,64 @@ HTMLHint.addRule({
     description: 'element with binding "addTooltip" should have binding "addDescription"',
     init: function (parser, reporter) {
         var self = this;
-        var isTooltipNotBound = true, isDivWithTooltip = false,tooltipId;
-        var isTooltipSpan = function (event) {
+        var looseTooltips = [];
+        var isTooltip = function (event) {
             var tagName = event.tagName;
-            var tooltipClass = HTMLHint.utils.isClassExsits(event.attrs, 'tooltip-help');
-            return tagName === 'span' && tooltipClass;
+            var hasTooltipClass = HTMLHint.utils.isClassExsits(event.attrs, 'tooltip-help');
+            return tagName === 'span' && hasTooltipClass;
         };
-        var isDescriptionPointsToTooltip = function (bindings, tooltipId) {
+        var isFocusableElement = function (event) {
+            var focusabaleTagNames = ['input', 'textare', 'select', 'a', 'button'];
+            return focusabaleTagNames.includes(event.tagName);
+        };
+        var getElementDescription = function (event) {
+            var bindings = HTMLHint.utils.getAttributeValue(event.attrs, "data-bind");
             var startOfDescription = bindings.indexOf('addDescription');
             if (startOfDescription === -1) {
-                return false;
+                return;
             }
             var endOfDescription = bindings.indexOf(',', startOfDescription) > -1 ? bindings.indexOf(',', startOfDescription) : bindings.length;
-            var descriptionBinding = bindings.substring(startOfDescription, endOfDescription);
-            return descriptionBinding.includes(tooltipId);
+            return bindings.substring(startOfDescription, endOfDescription);
+        };
+
+        var findBoundTooltipInDescription = function (descriptionBinding) {
+            return looseTooltips.find(function (tooltip) {
+                if (tooltip) {
+                    return descriptionBinding.includes(tooltip.id);
+                }
+            });
+        };
+
+        var removeFromLooseTooltips = function (boundTooltip) {
+            var boundTooltipIndex = looseTooltips.indexOf(boundTooltip);
+            if (boundTooltipIndex > -1) {
+                looseTooltips.splice(boundTooltipIndex, 1);
+            }
         };
 
         parser.addListener('tagstart', function (event) {
-            var dataBindings = HTMLHint.utils.getAttributeValue(event.attrs, "data-bind");
-            if (isTooltipSpan(event)) {
-                tooltipId = HTMLHint.utils.getAttributeValue(event.attrs, "id");
+            if (isTooltip(event)) {
+                var tooltipId = HTMLHint.utils.getAttributeValue(event.attrs, "id");
+                var fullRaw = event.raw + '</span>';
                 if (!tooltipId) {
                     reporter.error('span with class tooltip-help must have an id', event.line, event.col, self, event.raw);
                 }
-                isTooltipNotBound = true;
-                isDivWithTooltip = true;
+                else {
+                    looseTooltips.push({ id: tooltipId, line: event.line, col: event.col, raw: fullRaw });
+                }
             }
-            if (isDivWithTooltip) {
-                if (isDescriptionPointsToTooltip(dataBindings, tooltipId)) {
-                    isTooltipNotBound = false;
+            if (looseTooltips.length > 0 && isFocusableElement(event)) {
+                var descriptionBinding = getElementDescription(event);
+                if (descriptionBinding) {
+                    var boundTooltip = findBoundTooltipInDescription(descriptionBinding);
+                    removeFromLooseTooltips(boundTooltip);
                 }
             }
         });
-        parser.addListener('tagend', function (event) {
-            var tagName = event.tagName.toLowerCase();
-            if (tagName === "div") {
-                if (isDivWithTooltip && isTooltipNotBound) {
-                    reporter.error('span with class tooltip-help expects element with description in same div', event.line, event.col, self, event.raw);
-                }
-                isDivWithTooltip = false;
-            }
+        parser.addListener('end', function () {
+            looseTooltips.forEach(function (looseTooltip) {
+                reporter.error('tooltip ' + looseTooltip.raw + ' expects element to describe', looseTooltip.line, looseTooltip.col, self);
+            }, this);
         });
-
     }
 });
