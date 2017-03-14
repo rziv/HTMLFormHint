@@ -8,12 +8,12 @@ HTMLHint.addRule({
         var self = this;   
         
         var isCheckboxContainerWithoutRoleAttribute = function(event){
-            let roleAttribute = HTMLHint.utils.getAttributeValue(event.attrs,"role");
+            var roleAttribute = HTMLHint.utils.getAttributeValue(event.attrs,"role");
             return isCheckboxGroupContainer(event) && roleAttribute !== 'group';
          };
 
         var isCheckboxContainerWithoutAriaLabelledAttribute = function(event){
-            let ariaLabelledbyAttribute = HTMLHint.utils.getAttributeValue(event.attrs,"aria-labelledby");        
+            var ariaLabelledbyAttribute = HTMLHint.utils.getAttributeValue(event.attrs,"aria-labelledby");        
             return isCheckboxGroupContainer(event) && ariaLabelledbyAttribute === '';
         };
 
