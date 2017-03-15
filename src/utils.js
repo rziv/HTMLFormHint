@@ -35,11 +35,17 @@
         return classesArray.some(c => c === className);
     };
 
+    const isDynamicTable = function(tagName, attributes) { 
+        return (tagName.toLowerCase() === "table") &&                       
+                (HTMLHint.utils.isAttributeExists(attributes,"tfsdata") ||
+                HTMLHint.utils.isAttributeExists(attributes,"tfsnestedtable"));
+    };
     HTMLHint.utils = {
         isAttributeExists,
         getAttribute,
         isClassExsits,
-        getAttributeValue
+        getAttributeValue,
+        isDynamicTable: isDynamicTable
     };
 
 })(HTMLHint);

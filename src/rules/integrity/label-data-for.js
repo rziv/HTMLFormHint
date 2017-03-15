@@ -2,11 +2,6 @@ HTMLHint.addRule({
     id: 'label-data-for',
     description: 'label within a dynamic table should have a data-for attribute.',
     init: function(parser, reporter){
-        var isDynamicTable = function(tagName, attributes) { 
-                return (tagName.toLowerCase() === "table") &&                       
-                       (HTMLHint.utils.isAttributeExists(attributes,"tfsdata") ||
-                        HTMLHint.utils.isAttributeExists(attributes,"tfsnestedtable"));
-        };
         var inTable = false;  
         var self = this;
         var unclosedTablesCounter = 0;        
@@ -18,7 +13,7 @@ HTMLHint.addRule({
             {
                reporter.error('label within a dynamic table should have a data-for attribute. Error on line ' + event.line , event.line, event.col, self, event.raw);
             }         
-            if (isDynamicTable(tagName,event.attrs)  && !event.close){
+            if (HTMLHint.utils.isDynamicTable(tagName,event.attrs)  && !event.close){
                unclosedTablesCounter++;
                inTable = true;
             }            
