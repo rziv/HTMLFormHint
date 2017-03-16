@@ -10,7 +10,7 @@ ruleOptions[ruldId] = true;
 describe('Rules: '+ruldId, function(){
 
     it('input with aria-describedby attribute should reslt in an error', function(){
-        var code = '<input  type="text" />';
+        var code = '<input  type="text" aria-describedby="desc"/>';
         var messages = HTMLHint.verify(code, ruleOptions);
         expect(messages.length).to.be(1);
         expect(messages[0].rule.id).to.be(ruldId);
