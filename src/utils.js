@@ -1,5 +1,12 @@
 (function (HTMLHint, undefined) {
 
+    const trimAll = function (val) {
+        if (typeof val !== 'string') {
+            return;
+        }
+        return val.replace(/ /g, '');
+    };
+
     const isAttributeExists = function (attributes, attributeName) {
         if (!Array.isArray(attributes) || typeof attributeName !== "string") {
             return undefined;
@@ -36,7 +43,7 @@
             return;
         }
         var endOfBinding = bindings.indexOf(',', startOfBinding) > -1 ? bindings.indexOf(',', startOfBinding) : bindings.length;
-        return bindings.substring(startOfBinding, endOfBinding);
+        return trimAll(bindings.substring(startOfBinding + bindingName.length + 1, endOfBinding));//trim to avoid whiteSpaced, add 1 to take ":" in account
     };
 
     const isClassExsits = function (attributes, className) {
@@ -51,6 +58,7 @@
     };
 
     HTMLHint.utils = {
+        trimAll,
         isAttributeExists,
         getAttribute,
         isClassExsits,
