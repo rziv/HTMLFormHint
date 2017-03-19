@@ -31,11 +31,6 @@ HTMLHint.addRule({
         var isRadioNotWrappedWithDiv = function(event, prevEvent){
             return isRadioInput(event) && prevEvent.tagName.toLowerCase() !== 'div';
         };
-
-        var isRadioWithoutRadioRole = function(event){
-            var roleAttribute = HTMLHint.utils.getAttributeValue(event.attrs,"role");
-            return isRadioInput(event) && roleAttribute !== 'radio';
-        };
         
         parser.addListener('tagstart', function(event){
             if (isRadioContainerWithoutRoleAttribute(event))
@@ -48,9 +43,6 @@ HTMLHint.addRule({
             }   
             if(isRadioNotWrappedWithDiv(event, prevEvent)){
                reporter.error('radio input should be wrap with div element' + event.line , event.line, event.col, self, event.raw);
-            }
-            if(isRadioWithoutRadioRole(event)){
-                reporter.error('radio input should have role attribute with radio value' + event.line , event.line, event.col, self, event.raw);    
             }
             if(isRadioBindWithoutRaiogroupAccessibility(event)){
                 reporter.error('radio input should have radioGroupAccessibility binding' + event.line , event.line, event.col, self, event.raw);                    
