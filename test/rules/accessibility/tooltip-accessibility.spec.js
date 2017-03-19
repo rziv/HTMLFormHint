@@ -24,8 +24,8 @@ describe('Rules: ' + ruldId, function () {
         expect(messages.length).to.be(1);
         expect(messages[0].rule.id).to.be(ruldId);
         expect(messages[0].message).to.equal('span with class tooltip-help must have an id');
-        // expect(messages[0].line).to.be(2);
-        // expect(messages[0].col).to.be(21);
+        expect(messages[0].line).to.be(2);
+        expect(messages[0].col).to.be(21);
     });
 
     it('tooltip with no described element should result in an error', function () {
@@ -36,8 +36,8 @@ describe('Rules: ' + ruldId, function () {
         expect(messages.length).to.be(1);
         expect(messages[0].rule.id).to.be(ruldId);
         expect(messages[0].message).to.equal(formattedMessage(tooltip));
-        // expect(messages[0].line).to.be(3);
-        // expect(messages[0].col).to.be(21);
+        expect(messages[0].line).to.be(2);
+        expect(messages[0].col).to.be(20);
     });
 
     it('tooltip with no described focusabale element should result in an error', function () {
@@ -49,6 +49,8 @@ describe('Rules: ' + ruldId, function () {
         expect(messages.length).to.be(1);
         expect(messages[0].rule.id).to.be(ruldId);
         expect(messages[0].message).to.equal(formattedMessage(tooltip));
+        expect(messages[0].line).to.be(2);
+        expect(messages[0].col).to.be(21);
     });
 
     it('tooltip with described element in same div should not result in an error', function () {
@@ -71,7 +73,7 @@ describe('Rules: ' + ruldId, function () {
         expect(messages.length).to.be(0);
     });
 
-    it('two tooltip than one has described element should result in an error', function () {
+    it('two tooltip that one has described element should result in an error', function () {
         var code = `<div>
                     <span id="description" class='tooltip-help'></span>
                     <span id="description2" class='tooltip-help'></span>
@@ -83,6 +85,8 @@ describe('Rules: ' + ruldId, function () {
         expect(messages.length).to.be(1);
         expect(messages[0].rule.id).to.be(ruldId);
         expect(messages[0].message).to.equal(formattedMessage(`<span id="description2" class='tooltip-help'></span>`));
+        expect(messages[0].line).to.be(3);
+        expect(messages[0].col).to.be(21);
     });
     it('two tooltips that none have described element should result in an error', function () {
         var code = `<div>
@@ -95,6 +99,10 @@ describe('Rules: ' + ruldId, function () {
         expect(messages[0].message).to.equal(formattedMessage(`<span id="description" class='tooltip-help'></span>`));
         expect(messages[1].rule.id).to.be(ruldId);
         expect(messages[1].message).to.equal(formattedMessage(`<span id="description2" class='tooltip-help'></span>`));
+        expect(messages[0].line).to.be(2);
+        expect(messages[0].col).to.be(21);
+        expect(messages[1].line).to.be(3);
+        expect(messages[1].col).to.be(21);
     });
     it('two tooltips that both have described element should not result in an error', function () {
         var code = `<div>

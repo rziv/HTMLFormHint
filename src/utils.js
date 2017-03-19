@@ -29,17 +29,34 @@
         return attributeObject ? attributeObject.value : '';
     };
 
+    const getBindingValue = function (event, bindingName) {
+        var bindings = getAttributeValue(event.attrs, "data-bind");
+        var startOfBinding = bindings.indexOf(bindingName);
+        if (startOfBinding === -1) {
+            return;
+        }
+        var endOfBinding = bindings.indexOf(',', startOfBinding) > -1 ? bindings.indexOf(',', startOfBinding) : bindings.length;
+        return bindings.substring(startOfBinding, endOfBinding);
+    };
+
     const isClassExsits = function (attributes, className) {
         let classNames = getAttributeValue(attributes, "class");
         let classesArray = classNames.split(/\s+/g);
         return classesArray.some(c => c === className);
     };
 
+    const isFocusableElement = function (event) {
+        var focusabaleTagNames = ['input', 'textare', 'select', 'a', 'button'];
+        return focusabaleTagNames.includes(event.tagName);
+    };
+
     HTMLHint.utils = {
         isAttributeExists,
         getAttribute,
         isClassExsits,
-        getAttributeValue
+        getAttributeValue,
+        getBindingValue,
+        isFocusableElement
     };
 
 })(HTMLHint);

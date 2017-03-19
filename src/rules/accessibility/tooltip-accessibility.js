@@ -9,19 +9,6 @@ HTMLHint.addRule({
             var hasTooltipClass = HTMLHint.utils.isClassExsits(event.attrs, 'tooltip-help');
             return tagName === 'span' && hasTooltipClass;
         };
-        var isFocusableElement = function (event) {
-            var focusabaleTagNames = ['input', 'textare', 'select', 'a', 'button'];
-            return focusabaleTagNames.includes(event.tagName);
-        };
-        var getElementDescription = function (event) {
-            var bindings = HTMLHint.utils.getAttributeValue(event.attrs, "data-bind");
-            var startOfDescription = bindings.indexOf('addDescription');
-            if (startOfDescription === -1) {
-                return;
-            }
-            var endOfDescription = bindings.indexOf(',', startOfDescription) > -1 ? bindings.indexOf(',', startOfDescription) : bindings.length;
-            return bindings.substring(startOfDescription, endOfDescription);
-        };
 
         var findBoundTooltipInDescription = function (descriptionBinding) {
             return looseTooltips.find(function (tooltip) {
@@ -49,8 +36,8 @@ HTMLHint.addRule({
                     looseTooltips.push({ id: tooltipId, line: event.line, col: event.col, raw: fullRaw });
                 }
             }
-            if (looseTooltips.length > 0 && isFocusableElement(event)) {
-                var descriptionBinding = getElementDescription(event);
+            if (looseTooltips.length > 0 && HTMLHint.utils.isFocusableElement(event)) {
+                var descriptionBinding = HTMLHint.utils.getBindingValue(event,'addDescription');
                 if (descriptionBinding) {
                     var boundTooltip = findBoundTooltipInDescription(descriptionBinding);
                     removeFromLooseTooltips(boundTooltip);
