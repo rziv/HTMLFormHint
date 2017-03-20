@@ -10,10 +10,12 @@ HTMLHint.addRule({
             return tagName === 'span' && hasTooltipClass;
         };
 
-        var findBoundTooltipInDescription = function (descriptionBinding) {
+        var findBoundTooltipInDescription = function (description) {
+            var descriptionsIds = HTMLHint.utils.removeBoundaryQuotes(description).split(' ');
+
             return looseTooltips.find(function (tooltip) {
                 if (tooltip) {
-                    return descriptionBinding.includes(tooltip.id);
+                    return descriptionsIds.find(descID => descID === tooltip.id);
                 }
             });
         };
@@ -37,7 +39,7 @@ HTMLHint.addRule({
                 }
             }
             if (looseTooltips.length > 0 && HTMLHint.utils.isFocusableElement(event)) {
-                var descriptionBinding = HTMLHint.utils.getBindingValue(event,'addDescription');
+                var descriptionBinding = HTMLHint.utils.getBindingValue(event, 'addDescription');
                 if (descriptionBinding) {
                     var boundTooltip = findBoundTooltipInDescription(descriptionBinding);
                     removeFromLooseTooltips(boundTooltip);

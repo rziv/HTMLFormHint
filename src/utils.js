@@ -31,6 +31,10 @@
         return undefined;
     };
 
+    const removeBoundaryQuotes = function (str) {
+        return str.replace(/(^")|("$)/g, '');
+    };
+
     const getAttributeValue = function (attributes, attributeName) {
         let attributeObject = getAttribute(attributes, attributeName);
         return attributeObject ? attributeObject.value : '';
@@ -43,7 +47,7 @@
             return;
         }
         var endOfBinding = bindings.indexOf(',', startOfBinding) > -1 ? bindings.indexOf(',', startOfBinding) : bindings.length;
-        return trimAll(bindings.substring(startOfBinding + bindingName.length + 1, endOfBinding));//trim to avoid whiteSpaced, add 1 to take ":" in account
+        return bindings.substring(startOfBinding + bindingName.length + 1, endOfBinding).trim();//trim to avoid whiteSpaced, add 1 to take ":" in account
     };
 
     const isClassExsits = function (attributes, className) {
@@ -61,6 +65,7 @@
         trimAll,
         isAttributeExists,
         getAttribute,
+        removeBoundaryQuotes,
         isClassExsits,
         getAttributeValue,
         getBindingValue,

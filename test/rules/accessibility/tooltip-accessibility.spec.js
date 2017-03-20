@@ -107,7 +107,7 @@ describe('Rules: ' + ruldId, function () {
     it('two tooltips that both have described element should not result in an error', function () {
         var code = `<div>
                     <span id="description" class='tooltip-help'></span>
-                    <input data-bind='addDescription:"description2"' />
+                    <input data-bind='addDescription:"description"' />
                     </div>
                     <div>
                     <span id="description2" class='tooltip-help'></span>
