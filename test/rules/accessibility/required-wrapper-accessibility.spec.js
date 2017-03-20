@@ -35,7 +35,7 @@ describe('Rules: ' + ruldId, function () {
 
     it('div with "requiredWrapper" binding with validationMessage and element that points to it should not result in an error', function () {
         var code = `<div data-bind="requiredWrapper:firstName">
-                       <input id='firstName' data-bind="addDescription:${messagePrefix}input1"/>
+                       <input id='firstName' data-bind='addDescription:"${messagePrefix}input1"'/>
                        <span class="validationMessage" id="${messagePrefix}input1" aria-live="assertive"></span>
                     </div>`;
         var messages = HTMLHint.verify(code, ruleOptions);
@@ -44,7 +44,7 @@ describe('Rules: ' + ruldId, function () {
 
     it('div with "requiredWrapper" binding with multiple validationMessages and element that points to one of them should not result in an error', function () {
         var code = `<div data-bind="requiredWrapper:firstName">
-                       <input id='firstName' data-bind="addDescription:${messagePrefix}input1"/>
+                       <input id='firstName' data-bind='addDescription:"${messagePrefix}input1"'/>
                        <span class="validationMessage" id="${messagePrefix}input1" aria-live="assertive"></span>
                        <span class="validationMessage" id="${messagePrefix}input2" aria-live="assertive"></span>
                     </div>`;
@@ -54,7 +54,7 @@ describe('Rules: ' + ruldId, function () {
 
     it('div with "requiredWrapper" binding with validationMessage inside an inner div and element that points to it should not result in an error', function () {
         var code = `<div data-bind="requiredWrapper:firstName">
-                       <input id='firstName' data-bind="addDescription:${messagePrefix}input1"/>
+                       <input id='firstName' data-bind='addDescription:"${messagePrefix}input1"'/>
                        <div>
                         <span class="validationMessage" id="${messagePrefix}input1" aria-live="assertive"></span>
                        </div>
@@ -67,7 +67,7 @@ describe('Rules: ' + ruldId, function () {
         var code = `<div data-bind="requiredWrapper:firstName">
                        <span class="validationMessage" id="${messagePrefix}input1" aria-live="assertive"></span>
                        <div>
-                       <input id='firstName' data-bind="addDescription:${messagePrefix}input1"/>
+                       <input id='firstName' data-bind='addDescription:"${messagePrefix}input1"'/>
                        </div>
                     </div>`;
         var messages = HTMLHint.verify(code, ruleOptions);
@@ -77,7 +77,7 @@ describe('Rules: ' + ruldId, function () {
     it('div with "requiredWrapper" binding with validationMessage and element with multiple description should not result in an error', function () {
         var code = `<div data-bind="requiredWrapper:firstName">
                        <span class="validationMessage" id="${messagePrefix}input1" aria-live="assertive"></span>
-                       <input id='firstName' data-bind="addDescription:${messagePrefix}input1  desc"/>
+                       <input id='firstName' data-bind='addDescription:"${messagePrefix}input1  desc"'/>
                     </div>`;
         var messages = HTMLHint.verify(code, ruleOptions);
         expect(messages.length).to.be(0);
@@ -88,7 +88,7 @@ describe('Rules: ' + ruldId, function () {
                        <span class="validationMessage" id="${messagePrefix}input1" aria-live="assertive"></span>
                     </div>
                     <div data-bind="requiredWrapper:firstName">
-                       <input id='firstName' data-bind="addDescription:${messagePrefix}input1"/>
+                       <input id='firstName' data-bind='addDescription:"${messagePrefix}input1"'/>
                     </div>`;
         var messages = HTMLHint.verify(code, ruleOptions);
         expect(messages.length).to.be(2);
@@ -100,7 +100,7 @@ describe('Rules: ' + ruldId, function () {
         var code = `<div data-bind="requiredWrapper:firstName">
                        <span class="validationMessage" id="${messagePrefix}input1" aria-live="assertive"></span>
                        <div data-bind="requiredWrapper:firstName">
-                       <input id='firstName' data-bind="addDescription:${messagePrefix}input1"/>
+                       <input id='firstName' data-bind='addDescription:"${messagePrefix}input1"'/>
                     </div>
                     </div>`;
         var messages = HTMLHint.verify(code, ruleOptions);
