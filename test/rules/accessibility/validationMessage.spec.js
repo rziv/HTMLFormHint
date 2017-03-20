@@ -7,6 +7,8 @@ var ruldId = 'validation-message-accessibility',
 
 ruleOptions[ruldId] = true;
 
+var messagePrefix = HTMLHint.resources.validationMessagesAccessibility.messageIdPrefix;
+
 describe('Rules: ' + ruldId, function () {
 
     it('span with class "validationMessage" with no id should result in an error', function () {
@@ -28,13 +30,13 @@ describe('Rules: ' + ruldId, function () {
     });
 
     it('span with class "validationMessage" that its id starts with "vmsg_" should not result in an error', function () {
-        var code = '<span class="validationMessage" id="vmsg_input1" aria-live="assertive"></span>';
+        var code = `<span class="validationMessage" id="${messagePrefix}input1" aria-live="assertive"></span>`;
         var messages = HTMLHint.verify(code, ruleOptions);
         expect(messages.length).to.be(0);
     });
 
     it('span with class "validationMessage" with no aria-live attribute should result in an error', function () {
-        var code = '<span class="validationMessage" id="vmsg_input1"></span>';
+        var code = `<span class="validationMessage" id="${messagePrefix}input1"></span>`;
         var messages = HTMLHint.verify(code, ruleOptions);
         expect(messages.length).to.be(1);
         expect(messages[0].rule.id).to.be(ruldId);
@@ -43,7 +45,7 @@ describe('Rules: ' + ruldId, function () {
     });
 
     it('span with class "validationMessage" that its aria-live attribute value is different than "assertive" should result in an error', function () {
-        var code = '<span class="validationMessage" id="vmsg_input1" aria-live="off"></span>';
+        var code = `<span class="validationMessage" id="${messagePrefix}input1" aria-live="off"></span>`;
         var messages = HTMLHint.verify(code, ruleOptions);
         expect(messages.length).to.be(1);
         expect(messages[0].rule.id).to.be(ruldId);
