@@ -16,8 +16,10 @@ HTMLHint.addRule({
             return (event.tagName === "span" && HTMLHint.utils.isClassExsits(event.attrs, "validationMessage"));
         };
 
+     
+
         var findValidationMessageInDescription = function (description) {
-            var descriptionsIds = description.split(' ');
+            var descriptionsIds = HTMLHint.utils.removeBoundaryQuotes(description).split(' ');
             return descriptionsIds.find(function (descriptionId) {
                 return descriptionId.startsWith(HTMLHint.resources.validationMessagesAccessibility.messageIdPrefix);
             });

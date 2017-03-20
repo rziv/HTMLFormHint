@@ -31,6 +31,10 @@
         return undefined;
     };
 
+    const removeBoundaryQuotes = function (str) {
+        return str.replace(/(^")|("$)/g, '');
+    };
+
     const getAttributeValue = function (attributes, attributeName) {
         let attributeObject = getAttribute(attributes, attributeName);
         return attributeObject ? attributeObject.value : '';
@@ -60,6 +64,7 @@
 
     HTMLHint.utils = {
         isAttributeExists,
+        removeBoundaryQuotes,
         getAttribute,
         getBindingValue,
         isClassExsits,
