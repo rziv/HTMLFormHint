@@ -5,7 +5,7 @@ HTMLHint.addRule({
         var isRadiogroupContainer = function(event) { 
             var classNames = HTMLHint.utils.getAttributeValue(event.attrs,"class");
             var classesArray = classNames.split(/\s+/g);
-            return classesArray.some( className => className.toLowerCase() ==="radio");
+            return classesArray.some( className => className.toLowerCase() ==="radiogroupContainer");
         };
 
         var isRadioInput = function(event){
