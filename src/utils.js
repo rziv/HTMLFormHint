@@ -1,5 +1,5 @@
 (function (HTMLHint, undefined) {
-
+    "use strict";
     const trimAll = function (val) {
         if (typeof val !== 'string') {
             return;
