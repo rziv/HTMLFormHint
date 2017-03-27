@@ -5,7 +5,6 @@
         ariaLive: 'assertive'
     };
 
-
     var containersAccessibility = {
         idBinding: `'id':'tabpanel_+'name()`,
         ariaLabelBinding: `'aria-labeledby':'tab_'+name()`,
@@ -15,6 +14,7 @@
     HTMLHint.resources = {
         validationMessagesAccessibility,
         containersAccessibility
-    };
+    }
+
 
 })(HTMLHint);

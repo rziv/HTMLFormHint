@@ -56,10 +56,10 @@
         return classesArray.some(c => c === className);
     };
 
-    const isDynamicTable = function(tagName, attributes) { 
-        return (tagName.toLowerCase() === "table") &&                       
-                (HTMLHint.utils.isAttributeExists(attributes,"tfsdata") ||
-                HTMLHint.utils.isAttributeExists(attributes,"tfsnestedtable"));
+    const isDynamicTable = function (tagName, attributes) {
+        return (tagName.toLowerCase() === "table") &&
+            (HTMLHint.utils.isAttributeExists(attributes, "tfsdata") ||
+                HTMLHint.utils.isAttributeExists(attributes, "tfsnestedtable"));
     };
 
     const isFocusableElement = function (event) {
