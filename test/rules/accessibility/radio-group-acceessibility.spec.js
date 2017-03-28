@@ -10,7 +10,7 @@ ruleOptions[ruldId] = true;
 describe('Rules: '+ruldId, function(){
 
     it('radio group container without role of radiogroup should result in an error', function(){
-        var code = `<div class="radio" aria-labelledby="radioLabel">
+        var code = `<div class="radiogroupContainer" aria-labelledby="radioLabel">
                         <div><input id="private" name="type" data-bind="radioGroupAccessibility: true"  type="radio"/></div>
                         <div><input id="pulic" name="type" data-bind="radioGroupAccessibility: true" type="radio"/></div>                        
                     </div>`;
@@ -20,7 +20,7 @@ describe('Rules: '+ruldId, function(){
     });
 
      it('radio group container with role of radiogroup should not result in an error', function(){
-         var code = `<div class="radio" role="radiogroup" aria-labelledby="radioLabel">
+         var code = `<div class="radiogroupContainer" role="radiogroup" aria-labelledby="radioLabel">
                         <div><input tfsdata id="private" name="type" type="radio" data-bind="radioGroupAccessibility: true"/></div>
                         <div><input tfsdata id="pulic" name="type" type="radio" data-bind="radioGroupAccessibility: true"/></div>                        
                     </div>`;
@@ -28,7 +28,7 @@ describe('Rules: '+ruldId, function(){
         expect(messages.length).to.be(0);
     });
     it('radiogroup container without aria-labelledby attribute should result in an error', function(){
-        var code = `<div class="radio" role="radiogroup">
+        var code = `<div class="radiogroupContainer" role="radiogroup">
                         <div><input tfsdata id="private" name="type" type="radio" data-bind="radioGroupAccessibility: true"/></div>
                         <div><input tfsdata id="pulic" name="type" type="radio" data-bind="radioGroupAccessibility: true"/></div>                        
                     </div>`;
@@ -38,7 +38,7 @@ describe('Rules: '+ruldId, function(){
     });
 
      it('radio group container without role of radiogroup should not result in an error', function(){
-         var code = `<div class="radio" role="radiogroup" aria-labelledby="radioLabel">
+         var code = `<div class="radiogroupContainer" role="radiogroup" aria-labelledby="radioLabel">
                         <div><input id="private" name="type" type="radio" data-bind="radioGroupAccessibility: true"/></div>
                         <div><input id="pulic" name="type" type="radio" data-bind="radioGroupAccessibility: true"/></div>                        
                     </div>`;
@@ -47,7 +47,7 @@ describe('Rules: '+ruldId, function(){
     });
 
     it('radio input with wrapper div should not result in an error', function(){
-        var code = `<div class="radio" role="radiogroup" aria-labelledby="radioLabel">
+        var code = `<div class="radiogroupContainer" role="radiogroup" aria-labelledby="radioLabel">
                         <div><input tfsdata  data-bind="radioGroupAccessibility: true" id="private" name="type" type="radio"/></div>
                         <div><input tfsdata  data-bind="radioGroupAccessibility: true"  id="pulic" name="type" type="radio"/></div>                        
                     </div>`;
@@ -56,7 +56,7 @@ describe('Rules: '+ruldId, function(){
     });
 
      it('radio input without wrapper div should result in an error', function(){
-         var code = `<div class="radio" role="radiogroup" aria-labelledby="radioLabel">
+         var code = `<div class="radiogroupContainer" role="radiogroup" aria-labelledby="radioLabel">
                         <sapn><input id="private" name="type" data-bind="radioGroupAccessibility: true"  type="radio"/></span>
                         <sapn><input id="pulic" name="type" data-bind="radioGroupAccessibility: true"  type="radio"/></span>                        
                     </div>`;
@@ -65,7 +65,7 @@ describe('Rules: '+ruldId, function(){
     });
 
     it('radio input with radioGroupAccessibility binding should not result in an error', function(){
-        var code = `<div class="radio" role="radiogroup" aria-labelledby="radioLabel">
+        var code = `<div class="radiogroupContainer" role="radiogroup" aria-labelledby="radioLabel">
                         <div><input tfsdata data-bind="radioGroupAccessibility: true" id="private" name="type" type="radio"/></div>
                         <div><input tfsdata data-bind="radioGroupAccessibility: true" id="pulic" name="type" type="radio"/></div>                        
                     </div>`;
@@ -73,7 +73,7 @@ describe('Rules: '+ruldId, function(){
         expect(messages.length).to.be(0);
     });
         it('radio input without radioGroupAccessibility binding should result in an error', function(){
-        var code = `<div class="radio" role="radiogroup" aria-labelledby="radioLabel">
+        var code = `<div class="radiogroupContainer" role="radiogroup" aria-labelledby="radioLabel">
                         <div><input tfsdata id="private" name="type" type="radio"/></div>
                         <div><input tfsdata id="pulic" name="type" type="radio"/></div>                        
                     </div>`;
