@@ -16,8 +16,6 @@ HTMLHint.addRule({
             return (event.tagName === "span" && HTMLHint.utils.isClassExsits(event.attrs, "validationMessage"));
         };
 
-     
-
         var findValidationMessageInDescription = function (description) {
             var descriptionsIds = HTMLHint.utils.removeBoundaryQuotes(description).split(' ');
             return descriptionsIds.find(function (descriptionId) {
@@ -30,6 +28,10 @@ HTMLHint.addRule({
                 return false;
             }
             return usedMessagesInRequiredWrapper.find(item => messagesInRequiredWrapper.indexOf(item) !== -1);
+        };
+
+        var endOfRequiredWrapper = function () {
+            return unclosedDivsCounter === 0 && inRequiredWrapper === true;
         };
 
 
@@ -64,7 +66,7 @@ HTMLHint.addRule({
             if (tagName === "div" && unclosedDivsCounter > 0) {
                 unclosedDivsCounter--;
             }
-            if (unclosedDivsCounter === 0) {
+            if (endOfRequiredWrapper()) {
                 inRequiredWrapper = false;
                 if (!atleastOneBoundMessageInRequiredWrapper()) {
                     reporter.error('div with requiredWrapper binding should contain at least one validation message and one element that points to it' + event.line, event.line, event.col, self, event.raw);

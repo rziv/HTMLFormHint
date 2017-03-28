@@ -96,12 +96,20 @@ describe('Rules: ' + ruldId, function () {
         expect(messages[0].line).to.be(3);
         expect(messages[0].col).to.be(21);
     });
-    it('div with "requiredWrapper" binding with validationMessage and element that points to it in nested "requiredWrapper" div should result in an error', function () {
+    it('div with "requiredWrapper" binding with validationMessage and element that points to it in nested "requiredWrapper" div should not result in an error', function () {
         var code = `<div data-bind="requiredWrapper:firstName">
                        <span class="validationMessage" id="${messagePrefix}input1" aria-live="assertive"></span>
                        <div data-bind="requiredWrapper:firstName">
                        <input id='firstName' data-bind='addDescription:"${messagePrefix}input1"'/>
                     </div>
+                    </div>`;
+        var messages = HTMLHint.verify(code, ruleOptions);
+        expect(messages.length).to.be(0);
+    });
+
+    it('div without "requiredWrapper" binding without validationMessage should not result in an error', function () {
+        var code = `<div>
+                       <input id='firstName' data-bind='addDescription:"${messagePrefix}input1"'/>
                     </div>`;
         var messages = HTMLHint.verify(code, ruleOptions);
         expect(messages.length).to.be(0);
