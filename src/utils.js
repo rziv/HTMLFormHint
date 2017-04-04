@@ -1,11 +1,5 @@
 (function (HTMLHint, undefined) {
     "use strict";
-    const trimAll = function (val) {
-        if (typeof val !== 'string') {
-            return;
-        }
-        return val.replace(/ /g, '');
-    };
 
     const isAttributeExists = function (attributes, attributeName) {
         if (!Array.isArray(attributes) || typeof attributeName !== "string") {
@@ -15,6 +9,13 @@
         return attributes.some(
             (attr) => attr.name.toLowerCase() === attributeName.toLowerCase()
         );
+    };
+
+    const trimAll = function (val) {
+        if (typeof val !== 'string') {
+            return;
+        }
+        return val.replace(/ /g, '');
     };
 
     const getAttribute = function (attributes, attributeName) {
