@@ -24,7 +24,8 @@ HTMLHint.addRule({
         };
 
         var isCheckboxElement = function(event){
-            return HTMLHint.utils.getAttributeValue(event.attrs,"type")  === 'checkbox';          
+            var typeAttrValue = HTMLHint.utils.getAttributeValue(event.attrs,"type");
+            return typeAttrValue.toLowerCase() === 'checkbox';          
         };
         
         var singleCheckboxWithoutAccessibility = function(event){
