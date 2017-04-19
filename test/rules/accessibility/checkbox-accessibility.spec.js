@@ -60,10 +60,10 @@ describe('Rules: '+ruldId, function(){
     it('both checkbox group and single checkbox in one container', function(){
         var code = `<div>
                         <div class="checkbox-group-container" role="group" aria-labelledby="radioLabel">
-                            <input type="checkbox" data-bind="checkboxAccessibility: true" />
+                            <input type="checkBox" data-bind="checkboxAccessibility: true" />
                         </div>
                         <div class="checkbox">
-                            <input type="checkbox" data-bind="attr:{'aria-checked': true}" />
+                            <input type="checkBox" data-bind="attr:{'aria-checked': true}" />
                         </div>
 
                     </div>
