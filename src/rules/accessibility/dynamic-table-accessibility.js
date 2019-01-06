@@ -39,14 +39,27 @@ HTMLHint.addRule({
             return !bindAttributeValue.includes('accessibilityRowTitle');
         };
        
+        var isRemoveRowElement = function(event){
+            var bindAttributeValue = HTMLHint.utils.getAttributeValue(event.attrs, 'data-bind');
+            return bindAttributeValue.includes('removeRow');
+        };
+
         var isAddRowButton = function(event){
             var bindAttributeValue = HTMLHint.utils.getAttributeValue(event.attrs, 'data-bind');
             return bindAttributeValue.includes('addRow');
         };
 
-        var isAriaLabelAttributeOnAddRowButton = function(event) {            
+        var isAriaLabelAttr = function(event) {            
             return HTMLHint.utils.isAttributeExists(event.attrs, 'aria-label');                                             
-        };                        
+        };    
+
+        var isAriaLabelledbyAttr = function(event) {            
+            return HTMLHint.utils.isAttributeExists(event.attrs, 'aria-labelledby');                                             
+        }; 
+
+        var isDataToFocusAttr = function(event) {            
+            return HTMLHint.utils.isAttributeExists(event.attrs, 'data-tofocus');                                             
+        };          
 
         parser.addListener('tagstart', function(event){
             var tagName = event.tagName.toLowerCase();
@@ -67,11 +80,18 @@ HTMLHint.addRule({
             }
            
             if(tagName === 'input' && isAddRowButton(event)){
-                if(!isAriaLabelAttributeOnAddRowButton(event)){
+                if(!isAriaLabelAttr(event)){
                     reporter.error('Add row button should contain "aria-label" attribute that describe which tabel to add row. Error on line ' + event.line , event.line, event.col, self, event.raw);
                 }
-            }           
-          
+            }                       
+            if(isRemoveRowElement(event)){
+                if(!isAriaLabelledbyAttr(event)){
+                    reporter.error('Remove row element should contain "aria-labelledby" attribute that bind to span that describe delete row. Error on line ' + event.line , event.line, event.col, self, event.raw);
+                }                
+                if(tagName === 'input' && !isDataToFocusAttr(event)){
+                    reporter.error('Remove row element should contain "data-tofocus" attribute. Error on line ' + event.line , event.line, event.col, self, event.raw);
+                }
+            }             
             if (HTMLHint.utils.isDynamicTable(tagName,event.attrs)  && !event.close){
                unclosedTablesCounter++;
                inTable = true;
