@@ -7,7 +7,7 @@ HTMLHint.addRule({
         var inTableTitle = false;
         var unclosedDivsCounter = 0;
         var unclosedTablesCounter = 0;
-        var isExistAccessibilityTitleElement = [];
+        var isExistAccessibilityTitleElement = [];       
 
         var self = this;   
 
@@ -27,7 +27,7 @@ HTMLHint.addRule({
 
         var isAccessibilityTitleElement = function(event){
             return inTable && inTableTitle && HTMLHint.utils.isClassExsits(event.attrs, "accessibility-table-title");
-        };
+        };        
 
         var isTbobyWithoutAccessibilityTableBind = function(event){
             var bindAttributeValue = HTMLHint.utils.getAttributeValue(event.attrs,"data-bind");
@@ -38,12 +38,34 @@ HTMLHint.addRule({
             var bindAttributeValue = HTMLHint.utils.getAttributeValue(event.attrs,"data-bind");
             return !bindAttributeValue.includes('accessibilityRowTitle');
         };
+       
+        var isRemoveRowElement = function(event){
+            var bindAttributeValue = HTMLHint.utils.getAttributeValue(event.attrs, 'data-bind');
+            return bindAttributeValue.includes('removeRow');
+        };
+
+        var isAddRowButton = function(event){
+            var bindAttributeValue = HTMLHint.utils.getAttributeValue(event.attrs, 'data-bind');
+            return bindAttributeValue.includes('addRow');
+        };
+
+        var isAriaLabelAttr = function(event) {            
+            return HTMLHint.utils.isAttributeExists(event.attrs, 'aria-label');                                             
+        };    
+
+        var isAriaLabelledbyAttr = function(event) {            
+            return HTMLHint.utils.isAttributeExists(event.attrs, 'aria-labelledby');                                             
+        }; 
+
+        var isDataToFocusAttr = function(event) {            
+            return HTMLHint.utils.isAttributeExists(event.attrs, 'data-tofocus');                                             
+        };          
 
         parser.addListener('tagstart', function(event){
             var tagName = event.tagName.toLowerCase();
             if (tagName === 'tbody' && inTable && isTbobyWithoutAccessibilityTableBind(event)){
                 reporter.error('dynamic table tbody should have accessibilityTable binding ' + event.line , event.line, event.col, self, event.raw);
-            }
+            }           
             if (isAccessibilityTitleElement(event)){
                 isExistAccessibilityTitleElement[unclosedTablesCounter - 1] = true;
                 if(elementWithoutHeadingRole(event)){
@@ -56,6 +78,20 @@ HTMLHint.addRule({
                     reporter.error('accessibility title element should have accessibilityRowTitle binding' + event.line , event.line, event.col, self, event.raw);
                 }
             }
+           
+            if(tagName === 'input' && isAddRowButton(event)){
+                if(!isAriaLabelAttr(event)){
+                    reporter.error('Add row button should contain "aria-label" attribute that describe which tabel to add row. Error on line ' + event.line , event.line, event.col, self, event.raw);
+                }
+            }                       
+            if(isRemoveRowElement(event)){
+                if(!isAriaLabelledbyAttr(event)){
+                    reporter.error('Remove row element should contain "aria-labelledby" attribute that bind to span that describe delete row. Error on line ' + event.line , event.line, event.col, self, event.raw);
+                }                
+                if(tagName === 'input' && !isDataToFocusAttr(event)){
+                    reporter.error('Remove row element should contain "data-tofocus" attribute. Error on line ' + event.line , event.line, event.col, self, event.raw);
+                }
+            }             
             if (HTMLHint.utils.isDynamicTable(tagName,event.attrs)  && !event.close){
                unclosedTablesCounter++;
                inTable = true;
@@ -65,7 +101,7 @@ HTMLHint.addRule({
             } 
             if (inTableTitle) {
                 unclosedDivsCounter++;
-            }    
+            }            
         });
         parser.addListener('tagend', function(event){
             var tagName = event.tagName.toLowerCase();          
@@ -73,7 +109,7 @@ HTMLHint.addRule({
                 unclosedTablesCounter--;
                 if(!isExistAccessibilityTitleElement[unclosedTablesCounter]){
                     reporter.error('dynamic table title should have div with accessibility-table-title class' + event.line , event.line, event.col, self, event.raw);
-                }
+                }                            
             }
             if (tagName === "div" && unclosedDivsCounter>0) {
                 unclosedDivsCounter--;
