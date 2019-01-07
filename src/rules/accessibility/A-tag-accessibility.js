@@ -53,7 +53,7 @@ HTMLHint.addRule({
 
         var reportOfAccessibilityNewWindowAlertSpan = function(event) {  
             if (isExistSpanAccessibility === false) {                            
-                reporter.error('The form should contain accessibility span like this "<span id="accessibilityNewWindowAlert" class="hide">קישור זה ייפתח בחלון חדש</span>" ' + event.line, event.line, event.col, self, event.raw);                               
+                reporter.error('The form should contain accessibility span with id "accessibilityNewWindowAlert" and value "This link open in new window..." ' + event.line, event.line, event.col, self, event.raw);                               
             }                                                        
         };      
        
