@@ -5,6 +5,7 @@ var path = require('path');
 
 describe('Executable', function () {
     it('should close stream before exit', function (done) {
+        this.timeout(5000);
         var c = ChildProcess.spawn('node', [path.resolve(__dirname,'../bin/htmlhint'), '--format', 'json', path.resolve(__dirname,'./html/executable.html')]);
         var stdoutEnd = false;
         var processEnd = false;
