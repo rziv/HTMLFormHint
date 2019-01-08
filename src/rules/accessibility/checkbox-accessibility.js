@@ -1,17 +1,11 @@
 HTMLHint.addRule({
     id: 'checkbox-acceessibility',
-    description: 'verify checkbox group container has role and aria-labelledby attributes, and checkbox input has accessibility bindings.',
+    description: 'verify checkbox group container has aria-labelledby attributes, and checkbox input has accessibility bindings.',
     init: function(parser, reporter){
         var unclosedDivsCounter = 0;
-        var inCheckboxGroup = false;
-        var prevEvent;
+        var inCheckboxGroup = false;       
         var self = this;   
-        
-        var isCheckboxContainerWithoutRoleAttribute = function(event){
-            var roleAttribute = HTMLHint.utils.getAttributeValue(event.attrs,"role");
-            return isCheckboxGroupContainer(event) && roleAttribute !== 'group';
-         };
-
+              
         var isCheckboxContainerWithoutAriaLabelledAttribute = function(event){
             var ariaLabelledbyAttribute = HTMLHint.utils.getAttributeValue(event.attrs,"aria-labelledby");        
             return isCheckboxGroupContainer(event) && ariaLabelledbyAttribute === '';
@@ -43,25 +37,20 @@ HTMLHint.addRule({
             if(tagName === 'div' && inCheckboxGroup){
                 unclosedDivsCounter++;
             }
-             if(isCheckboxGroupContainer(event)){
-                inCheckboxGroup = true;
-                unclosedDivsCounter++;
-             }
-             if (isCheckboxContainerWithoutRoleAttribute(event))
-             {
-                reporter.error('checkbox container should have role attribute with group value' + event.line , event.line, event.col, self, event.raw);
-             }  
-             if (isCheckboxContainerWithoutAriaLabelledAttribute(event))
-             {
-                reporter.error('checkbox container should have aria-labelledby attribute with value' + event.line , event.line, event.col, self, event.raw);
-             } 
-             if(singleCheckboxWithoutAccessibility(event)){
-                 reporter.error('single checkbox input should have aria-checked binding' + event.line , event.line, event.col, self, event.raw);                    
-             }
-             if(checkboxInGroupWithoutAccessibility(event)){
-                 reporter.error('checkbox input in group should have checkboxAccessibility binding' + event.line , event.line, event.col, self, event.raw);                    
-             }
-             prevEvent = event;
+            if(isCheckboxGroupContainer(event)){
+            inCheckboxGroup = true;
+            unclosedDivsCounter++;
+            }          
+            if (isCheckboxContainerWithoutAriaLabelledAttribute(event))
+            {
+            reporter.error('checkbox container should have aria-labelledby attribute with value' + event.line , event.line, event.col, self, event.raw);
+            } 
+            if(singleCheckboxWithoutAccessibility(event)){
+                reporter.error('single checkbox input should have aria-checked binding' + event.line , event.line, event.col, self, event.raw);                    
+            }
+            if(checkboxInGroupWithoutAccessibility(event)){
+                reporter.error('checkbox input in group should have checkboxAccessibility binding' + event.line , event.line, event.col, self, event.raw);                    
+            }            
         });         
         parser.addListener('tagend', function(event){
             var tagName = event.tagName.toLowerCase();          

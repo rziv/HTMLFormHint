@@ -24,7 +24,7 @@ HTMLHint.addRule({
         
         var reportOfAccessibilityFormatDateSpan = function(event) {  
             if (isExistSpanAccessibility === false) {                            
-                reporter.error('The form should contain accessibility span like this "<span id="accessibilityFormatDate" class="hide">עליך להזין תאריך בפורמט DD/MM/YYYY</span>" ' + event.line, event.line, event.col, self, event.raw);                               
+                reporter.error('The form should contain accessibility span with id "accessibilityFormatDate" and value "You must enter a date format DD/MM/YYYY..." ' + event.line, event.line, event.col, self, event.raw);                               
             }                                                        
         };
 

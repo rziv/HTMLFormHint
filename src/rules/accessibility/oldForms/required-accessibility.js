@@ -17,7 +17,7 @@ HTMLHint.addRule({
             var tagName = event.tagName.toLowerCase();
             if(tagName === 'input'){    
                 if (isTfsrequiredAttr(event) || isTfsrequiredBind(event)) {
-                    reporter.error('input with attribute\binding "tfsrequired" should replace it to "tlpRequired" binding. Error on line ' + event.line, event.line, event.col, self, event.raw);
+                    reporter.error('input with attribute or binding "tfsrequired" should replace to "tlpRequired" binding. Error on line ' + event.line, event.line, event.col, self, event.raw);
                 }
             }
         });
