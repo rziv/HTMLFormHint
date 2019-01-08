@@ -7,24 +7,10 @@ var ruldId = 'checkbox-acceessibility',
 
 ruleOptions[ruldId] = true;
 
-describe('Rules: '+ruldId, function(){
-
-    it('checkboxes group container without role of group should result in an error', function(){
-        var code = `<div class="checkbox-group-container" aria-labelledby="radioLabel">
-                        </div>`;
-        var messages = HTMLHint.verify(code, ruleOptions);
-        expect(messages.length).to.be(1);
-        expect(messages[0].rule.id).to.be(ruldId);
-    });
-
-     it('checkboxes group container with role of group should not result in an error', function(){
-         var code = `<div class="checkbox-group-container" role="group" aria-labelledby="radioLabel">
-                        </div>`;
-        var messages = HTMLHint.verify(code, ruleOptions);
-        expect(messages.length).to.be(0);
-    });
+describe('Rules: '+ruldId, function(){   
+  
      it('checkboxes group container without aria-labelledby should result in an error', function(){
-         var code = `<div class="checkbox-group-container" role="group">
+         var code = `<div class="checkbox-group-container">
                         </div>`;
         var messages = HTMLHint.verify(code, ruleOptions);
         expect(messages.length).to.be(1);
@@ -44,14 +30,14 @@ describe('Rules: '+ruldId, function(){
         expect(messages.length).to.be(0);
     });
     it('checkbox input in group with checkboxAccessibility binding should not result in an error', function(){
-        var code = `<div class="checkbox-group-container" role="group" aria-labelledby="radioLabel">
+        var code = `<div class="checkbox-group-container" aria-labelledby="radioLabel">
                         <input type="checkbox" data-bind="checkboxAccessibility: true" />
                     </div>`;
         var messages = HTMLHint.verify(code, ruleOptions);
         expect(messages.length).to.be(0);
     });
     it('checkbox input in group without checkboxAccessibility binding should result in an error', function(){
-        var code = `<div class="checkbox-group-container" role="group" aria-labelledby="radioLabel">
+        var code = `<div class="checkbox-group-container" aria-labelledby="radioLabel">
                         <input type="checkbox"/>
                     </div>`;
         var messages = HTMLHint.verify(code, ruleOptions);
@@ -59,7 +45,7 @@ describe('Rules: '+ruldId, function(){
     });
     it('both checkbox group and single checkbox in one container', function(){
         var code = `<div>
-                        <div class="checkbox-group-container" role="group" aria-labelledby="radioLabel">
+                        <div class="checkbox-group-container" aria-labelledby="radioLabel">
                             <input type="checkBox" data-bind="checkboxAccessibility: true" />
                         </div>
                         <div class="checkbox">
