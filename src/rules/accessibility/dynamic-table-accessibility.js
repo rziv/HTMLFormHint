@@ -38,7 +38,12 @@ HTMLHint.addRule({
             var bindAttributeValue = HTMLHint.utils.getAttributeValue(event.attrs,"data-bind");
             return !bindAttributeValue.includes('accessibilityRowTitle');
         };
-       
+               
+        var elementWithouttableNameBind = function(event){
+            var bindAttributeValue = HTMLHint.utils.getAttributeValue(event.attrs,"data-bind");
+            return !bindAttributeValue.includes('tableName');
+        };
+
         var isRemoveRowElement = function(event){
             var bindAttributeValue = HTMLHint.utils.getAttributeValue(event.attrs, 'data-bind');
             return bindAttributeValue.includes('removeRow');
@@ -64,20 +69,24 @@ HTMLHint.addRule({
         parser.addListener('tagstart', function(event){
             var tagName = event.tagName.toLowerCase();
             if (tagName === 'tbody' && inTable && isTbobyWithoutAccessibilityTableBind(event)){
-                reporter.error('dynamic table tbody should have accessibilityTable binding ' + event.line , event.line, event.col, self, event.raw);
+                reporter.error('dynamic table tbody should have accessibilityTable binding. Error on line ' + event.line , event.line, event.col, self, event.raw);
             }           
             if (isAccessibilityTitleElement(event)){
                 isExistAccessibilityTitleElement[unclosedTablesCounter - 1] = true;
                 if(elementWithoutHeadingRole(event)){
-                    reporter.error('accessibility title element should have role attribute with heading value ' + event.line , event.line, event.col, self, event.raw);                    
+                    reporter.error('accessibility title element should have role attribute with heading value. Error on line ' + event.line , event.line, event.col, self, event.raw);                    
                 }
                 if(elementWithoutAriaLevel(event)){
-                    reporter.error('accessibility title element should have aria-level attribute  ' + event.line , event.line, event.col, self, event.raw);                    
+                    reporter.error('accessibility title element should have aria-level attribute. Error on line ' + event.line , event.line, event.col, self, event.raw);                    
                 }
                 if(elementWithoutAccessibilityRowTitleBind(event)){
-                    reporter.error('accessibility title element should have accessibilityRowTitle binding' + event.line , event.line, event.col, self, event.raw);
+                    reporter.error('accessibility title element should have accessibilityRowTitle binding. Error on line ' + event.line , event.line, event.col, self, event.raw);
+                }
+                if(elementWithouttableNameBind(event)){
+                    reporter.error('accessibility title element should have "tableName" binding with value of tabel name in hebrew. Error on line ' + event.line , event.line, event.col, self, event.raw);
                 }
             }
+            
            
             if(tagName === 'input' && isAddRowButton(event)){
                 if(!isAriaLabelAttr(event)){
@@ -108,7 +117,7 @@ HTMLHint.addRule({
             if (tagName === "table" && unclosedTablesCounter>0) {
                 unclosedTablesCounter--;
                 if(!isExistAccessibilityTitleElement[unclosedTablesCounter]){
-                    reporter.error('dynamic table title should have div with accessibility-table-title class' + event.line , event.line, event.col, self, event.raw);
+                    reporter.error('dynamic table title should have div with accessibility-table-title class. Error on line ' + event.line , event.line, event.col, self, event.raw);
                 }                            
             }
             if (tagName === "div" && unclosedDivsCounter>0) {

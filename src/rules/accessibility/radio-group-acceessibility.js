@@ -32,13 +32,13 @@ HTMLHint.addRule({
         parser.addListener('tagstart', function(event){    
             if (isRadioContainerWithoutAriaAttribute(event))
             {
-               reporter.error('radiogroup container should have aria-labelledby attribute with value' + event.line , event.line, event.col, self, event.raw);
+               reporter.error('radiogroup container should have aria-labelledby attribute with value. Error on line ' + event.line , event.line, event.col, self, event.raw);
             }   
             if(isRadioNotWrappedWithDiv(event, prevEvent)){
-               reporter.error('radio input should be wrap with div element' + event.line , event.line, event.col, self, event.raw);
+               reporter.error('radio input should be wrap with div element. Error on line ' + event.line , event.line, event.col, self, event.raw);
             }
             if(isRadioBindWithoutRaiogroupAccessibility(event)){
-                reporter.error('radio input should have radioGroupAccessibility binding' + event.line , event.line, event.col, self, event.raw);                    
+                reporter.error('radio input should have radioGroupAccessibility binding. Error on line ' + event.line , event.line, event.col, self, event.raw);                    
             }
             prevEvent = event;
         });         

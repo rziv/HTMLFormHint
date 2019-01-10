@@ -69,7 +69,7 @@ HTMLHint.addRule({
             if (endOfRequiredWrapper()) {
                 inRequiredWrapper = false;
                 if (!atleastOneBoundMessageInRequiredWrapper()) {
-                    reporter.error('div with requiredWrapper binding should contain at least one validation message and one element that points to it' + event.line, event.line, event.col, self, event.raw);
+                    reporter.error('div with requiredWrapper binding should contain at least one validation message and one element that points to it. Error on line ' + event.line, event.line, event.col, self, event.raw);
                 }
                 messagesInRequiredWrapper = [];
                 usedMessagesInRequiredWrapper = [];

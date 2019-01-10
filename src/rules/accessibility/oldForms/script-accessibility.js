@@ -15,7 +15,7 @@ HTMLHint.addRule({
             var accessibilityScript = srcScripts.includes('CDN/Common/JS/accessibility.js');   
             var accessibilityMethodsScript = srcScripts.includes('CDN/Common/JS/accessibilityMethods.js');   
             if(accessibilityScript === false || accessibilityMethodsScript === false) {
-                reporter.error('the form should contain "accessibility.js" and "accessibilityMethods.js" scripts ' + event.line , event.line, event.col, self, event.raw);
+                reporter.error('the form should contain "accessibility.js" and "accessibilityMethods.js" scripts. Error on line ' + event.line , event.line, event.col, self, event.raw);
             }
         }; 
          
