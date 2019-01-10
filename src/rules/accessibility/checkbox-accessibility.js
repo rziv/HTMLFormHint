@@ -43,13 +43,13 @@ HTMLHint.addRule({
             }          
             if (isCheckboxContainerWithoutAriaLabelledAttribute(event))
             {
-            reporter.error('checkbox container should have aria-labelledby attribute with value' + event.line , event.line, event.col, self, event.raw);
+            reporter.error('checkbox container should have aria-labelledby attribute with value. Error on line ' + event.line , event.line, event.col, self, event.raw);
             } 
             if(singleCheckboxWithoutAccessibility(event)){
-                reporter.error('single checkbox input should have aria-checked binding' + event.line , event.line, event.col, self, event.raw);                    
+                reporter.error('single checkbox input should have aria-checked binding. Error on line ' + event.line , event.line, event.col, self, event.raw);                    
             }
             if(checkboxInGroupWithoutAccessibility(event)){
-                reporter.error('checkbox input in group should have checkboxAccessibility binding' + event.line , event.line, event.col, self, event.raw);                    
+                reporter.error('checkbox input in group should have checkboxAccessibility binding. Error on line ' + event.line , event.line, event.col, self, event.raw);                    
             }            
         });         
         parser.addListener('tagend', function(event){

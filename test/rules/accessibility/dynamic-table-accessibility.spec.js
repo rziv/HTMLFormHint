@@ -15,7 +15,7 @@ describe('Rules: '+ruldId, function(){
                        <tbody>
                        <tr>
                             <div class="table-title-operation">
-                                <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true" aria-level="4" role="heading"></div>
+                                <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true, tableName:'בטבלת פרטים'" aria-level="4" role="heading"></div>
                             </div>
                        </tr>
                         <tr>
@@ -36,7 +36,7 @@ describe('Rules: '+ruldId, function(){
                        <tbody data-bind="accessibilityTable: contacts">
                        <tr>
                             <div class="table-title-operation">
-                                <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true" aria-level="4" role="heading"></div>
+                                <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true, tableName:'בטבלת פרטים'" aria-level="4" role="heading"></div>
                             </div>
                        </tr>
                         <tr>
@@ -77,7 +77,7 @@ describe('Rules: '+ruldId, function(){
                        <tbody data-bind="accessibilityTable: contacts">
                        <tr>
                             <div class="table-title-operation">
-                                <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true" role="heading"></div>
+                                <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true, tableName:'בטבלת פרטים'" role="heading"></div>
                             </div>
                        </tr>
                         <tr>
@@ -98,7 +98,7 @@ describe('Rules: '+ruldId, function(){
                        <tbody data-bind="accessibilityTable: contacts">
                        <tr>
                             <div class="table-title-operation">
-                                <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true" aria-level="4"></div>
+                                <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true, tableName:'בטבלת פרטים'" aria-level="4"></div>
                             </div>
                        </tr>
                         <tr>
@@ -119,7 +119,7 @@ describe('Rules: '+ruldId, function(){
                        <tbody data-bind="accessibilityTable: contacts">
                        <tr>
                             <div class="table-title-operation">
-                                <div class="accessibility-table-title" aria-level="4" role="heading"></div>
+                                <div class="accessibility-table-title" aria-level="4" role="heading" data-bind="tableName:'בטבלת פרטים'"></div>
                             </div>
                        </tr>
                         <tr>
@@ -134,13 +134,55 @@ describe('Rules: '+ruldId, function(){
         expect(messages.length).to.be(1); 
     });
 
+    it('accessibility-table-title element without tableName binding should result in an error', function(){
+        var code = `<table tfsdata>
+        <thead></thead>
+        <tbody data-bind="accessibilityTable: contacts">
+        <tr>
+             <div class="table-title-operation">
+                 <div class="accessibility-table-title" aria-level="4" role="heading" data-bind="accessibilityRowTitle:true"></div>
+             </div>
+        </tr>
+         <tr>
+             <td>
+                 <label data-for="firstName">First Name</label>
+                 <input id="firstName"/>
+             <td>
+         </tr>
+        </tbody>
+     </table>`;
+        var messages = HTMLHint.verify(code, ruleOptions);
+        expect(messages.length).to.be(1); 
+    });
+
+    it('accessibility-table-title element with tableName binding should not result in an error', function(){
+        var code = `<table tfsdata>
+        <thead></thead>
+        <tbody data-bind="accessibilityTable: contacts">
+        <tr>
+             <div class="table-title-operation">
+                 <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true, tableName:'בטבלת פרטים'" aria-level="4" role="heading"></div>
+             </div>
+        </tr>
+         <tr>
+             <td>
+                 <label data-for="firstName">First Name</label>
+                 <input id="firstName"/>
+             <td>
+         </tr>
+        </tbody>
+     </table>`;
+        var messages = HTMLHint.verify(code, ruleOptions);
+        expect(messages.length).to.be(0); 
+    });
+
     it('add row button element without aria-Label attribute should result in an error', function(){
         var code = `<table tfsdata>
                       <thead></thead>
                       <tbody data-bind="accessibilityTable: contacts">
                       <tr>
                         <div class="table-title-operation">
-                            <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true" aria-level="4" role="heading"></div>
+                            <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true, tableName:'בטבלת פרטים'" aria-level="4" role="heading"></div>
                         </div>
                         <div class="table-title-on-the-left">
                             <span id="removeRowSpan" class="hide">מחק שורה מטבלת מעסיקים</span>
@@ -172,7 +214,7 @@ describe('Rules: '+ruldId, function(){
                       <tbody data-bind="accessibilityTable: contacts">
                       <tr>
                         <div class="table-title-operation">
-                            <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true" aria-level="4" role="heading"></div>
+                            <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true, tableName:'בטבלת פרטים'" aria-level="4" role="heading"></div>
                         </div>
                         <div class="table-title-on-the-left">
                             <span id="removeRowSpan" class="hide">מחק שורה מטבלת מעסיקים</span>
@@ -204,7 +246,7 @@ describe('Rules: '+ruldId, function(){
                       <tbody data-bind="accessibilityTable: contacts">
                       <tr>
                         <div class="table-title-operation">
-                            <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true" aria-level="4" role="heading"></div>
+                            <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true, tableName:'בטבלת פרטים'" aria-level="4" role="heading"></div>
                         </div>
                         <div class="table-title-on-the-left">                          
                             <span class="delete-line-label">
@@ -235,7 +277,7 @@ describe('Rules: '+ruldId, function(){
                       <tbody data-bind="accessibilityTable: contacts">
                       <tr>
                         <div class="table-title-operation">
-                            <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true" aria-level="4" role="heading"></div>
+                            <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true, tableName:'בטבלת פרטים'" aria-level="4" role="heading"></div>
                         </div>
                         <div class="table-title-on-the-left">
                             <span id="removeRowSpan" class="hide">מחק שורה מטבלת מעסיקים</span>
@@ -267,7 +309,7 @@ describe('Rules: '+ruldId, function(){
                       <tbody data-bind="accessibilityTable: contacts">
                       <tr>
                         <div class="table-title-operation">
-                            <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true" aria-level="4" role="heading"></div>
+                            <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true, tableName:'בטבלת פרטים'" aria-level="4" role="heading"></div>
                         </div>
                         <div class="table-title-on-the-left">
                             <span id="removeRowSpan" class="hide">מחק שורה מטבלת מעסיקים</span>
@@ -299,7 +341,7 @@ describe('Rules: '+ruldId, function(){
                       <tbody data-bind="accessibilityTable: contacts">
                       <tr>
                         <div class="table-title-operation">
-                            <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true" aria-level="4" role="heading"></div>
+                            <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true, tableName:'בטבלת פרטים'" aria-level="4" role="heading"></div>
                         </div>
                         <div class="table-title-on-the-left">
                             <span id="removeRowSpan" class="hide">מחק שורה מטבלת מעסיקים</span>
@@ -332,7 +374,7 @@ describe('Rules: '+ruldId, function(){
                         <tbody data-bind="accessibilityTable: contacts">
                             <tr>
                                 <div class="table-title-operation">
-                                    <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true" aria-level="4" role="heading"></div>
+                                    <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true, tableName:'בטבלת פרטים'" aria-level="4" role="heading"></div>
                                 </div>
                             </tr>
                             <tr>
@@ -346,7 +388,7 @@ describe('Rules: '+ruldId, function(){
                                 <tbody>
                                     <tr>
                                         <div class="table-title-operation">
-                                            <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true" aria-level="4" role="heading"></div>
+                                            <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true, tableName:'בטבלת פרטים'" aria-level="4" role="heading"></div>
                                         </div>
                                     </tr>
                                     <tr>
@@ -369,7 +411,7 @@ describe('Rules: '+ruldId, function(){
                         <tbody data-bind="accessibilityTable: contacts">
                             <tr>
                                     <div class="table-title-operation">
-                                        <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true" aria-level="4" role="heading"></div>
+                                        <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true, tableName:'בטבלת פרטים'" aria-level="4" role="heading"></div>
                                     </div>
                             </tr>
                             <tr>
@@ -383,7 +425,7 @@ describe('Rules: '+ruldId, function(){
                                 <tbody data-bind="accessibilityTable: contacts">
                                     <tr>
                                         <div class="table-title-operation">
-                                            <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true" aria-level="4" role="heading"></div>
+                                            <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true, tableName:'בטבלת פרטים'" aria-level="4" role="heading"></div>
                                         </div>
                                     </tr>
                                     <tr>
@@ -406,7 +448,7 @@ describe('Rules: '+ruldId, function(){
                         <tbody data-bind="accessibilityTable: contacts">
                             <tr>
                                     <div class="table-title-operation">
-                                        <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true" aria-level="4" role="heading"></div>
+                                        <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true, tableName:'בטבלת פרטים'" aria-level="4" role="heading"></div>
                                     </div>
                             </tr>
                             <tr>
@@ -441,7 +483,7 @@ describe('Rules: '+ruldId, function(){
                         <tbody data-bind="accessibilityTable: contacts">
                             <tr>
                                     <div class="table-title-operation">
-                                        <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true" aria-level="4" role="heading"></div>
+                                        <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true, tableName:'בטבלת פרטים'" aria-level="4" role="heading"></div>
                                     </div>
                             </tr>
                             <tr>
@@ -455,7 +497,7 @@ describe('Rules: '+ruldId, function(){
                                 <tbody data-bind="accessibilityTable: contacts">
                                     <tr>
                                         <div class="table-title-operation">
-                                            <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true" role="heading"></div>
+                                            <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true, tableName:'בטבלת פרטים'" role="heading"></div>
                                         </div>
                                     </tr>
                                     <tr>
@@ -478,7 +520,7 @@ describe('Rules: '+ruldId, function(){
                         <tbody data-bind="accessibilityTable: contacts">
                             <tr>
                                     <div class="table-title-operation">
-                                        <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true" aria-level="4" role="heading"></div>
+                                        <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true, tableName:'בטבלת פרטים'" aria-level="4" role="heading"></div>
                                     </div>
                             </tr>
                             <tr>
@@ -492,7 +534,7 @@ describe('Rules: '+ruldId, function(){
                                 <tbody data-bind="accessibilityTable: contacts">
                                     <tr>
                                         <div class="table-title-operation">
-                                            <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true" aria-level="4"></div>
+                                            <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true, tableName:'בטבלת פרטים'" aria-level="4"></div>
                                         </div>
                                     </tr>
                                     <tr>
@@ -515,7 +557,7 @@ describe('Rules: '+ruldId, function(){
                             <tbody data-bind="accessibilityTable: contacts">
                                 <tr>
                                         <div class="table-title-operation">
-                                            <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true" aria-level="4" role="heading"></div>
+                                            <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true, tableName:'בטבלת פרטים'" aria-level="4" role="heading"></div>
                                         </div>
                                 </tr>
                                 <tr>
@@ -529,7 +571,7 @@ describe('Rules: '+ruldId, function(){
                                     <tbody data-bind="accessibilityTable: contacts">
                                         <tr>
                                             <div class="table-title-operation">
-                                                <div class="accessibility-table-title" aria-level="4" role="heading"></div>
+                                                <div class="accessibility-table-title" data-bind="tableName:'בטבלת פרטים'" aria-level="4" role="heading"></div>
                                             </div>
                                         </tr>
                                         <tr>
@@ -545,14 +587,14 @@ describe('Rules: '+ruldId, function(){
             var messages = HTMLHint.verify(code, ruleOptions);
             expect(messages.length).to.be(1); 
         });
-
+        
         it('inner add row button element without aria-Label attribute should result in an error', function(){
             var code = `<table tfsdata>
                           <thead></thead>
                           <tbody data-bind="accessibilityTable: contacts">
                           <tr>
                             <div class="table-title-operation">
-                                <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true" aria-level="4" role="heading"></div>
+                                <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true, tableName:'בטבלת פרטים'" aria-level="4" role="heading"></div>
                             </div>
                           </tr>
                            <tr>
@@ -576,7 +618,7 @@ describe('Rules: '+ruldId, function(){
                           <tbody data-bind="accessibilityTable: contacts">
                           <tr>
                             <div class="table-title-operation">
-                                <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true" aria-level="4" role="heading"></div>
+                                <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true, tableName:'בטבלת פרטים'" aria-level="4" role="heading"></div>
                             </div>
                           </tr>
                            <tr>
