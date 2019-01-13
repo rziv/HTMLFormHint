@@ -28,6 +28,15 @@ HTMLHint.addRule({
         var isRadioNotWrappedWithDiv = function(event, prevEvent){
             return isRadioInput(event) && prevEvent.tagName.toLowerCase() !== 'div';
         };
+
+        var isInlineElemenClas = function(prevEvent) { 
+            var classNames = HTMLHint.utils.getAttributeValue(prevEvent.attrs,"class");
+            return classNames.includes('inline-element');
+        };
+
+        var isRadioNotWrappedWithInlineElementClas = function(event, prevEvent){
+            return isRadioInput(event) && !isInlineElemenClas(prevEvent);
+        };
         
         parser.addListener('tagstart', function(event){    
             if (isRadioContainerWithoutAriaAttribute(event))
@@ -37,6 +46,9 @@ HTMLHint.addRule({
             if(isRadioNotWrappedWithDiv(event, prevEvent)){
                reporter.error('radio input should be wrap with div element. Error on line ' + event.line , event.line, event.col, self, event.raw);
             }
+            if(isRadioNotWrappedWithInlineElementClas(event, prevEvent)){
+                reporter.error('element that wrap radio input should contain "inline-element" class. Error on line ' + event.line , event.line, event.col, self, event.raw);
+             }
             if(isRadioBindWithoutRaiogroupAccessibility(event)){
                 reporter.error('radio input should have radioGroupAccessibility binding. Error on line ' + event.line , event.line, event.col, self, event.raw);                    
             }
