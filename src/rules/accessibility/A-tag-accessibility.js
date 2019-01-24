@@ -8,9 +8,19 @@ HTMLHint.addRule({
         var tagAWithoutaddDescriptionBind = [];
         var isExistSpanAccessibility = false;
 
-        var addElementWithoutAriaLabelAttrToArray = function(event) {            
-            var ariaLabelAttribute = HTMLHint.utils.isAttributeExists(event.attrs, 'aria-label');   
-            if(ariaLabelAttribute === false){
+        var isAriaLabelAttribute = function(event){
+            var ariaLabelAttribute = HTMLHint.utils.isAttributeExists(event.attrs, 'aria-label');
+            return ariaLabelAttribute === true;   
+        };
+
+        var isAriaLabelBinding = function(event){
+            var bindAttributeValue = HTMLHint.utils.getAttributeValue(event.attrs, 'data-bind');
+            var ariaLabelBind = bindAttributeValue.includes('aria-label');
+            return ariaLabelBind === true;
+        };
+
+        var addElementWithoutAriaLabelAttrToArray = function(event) {  
+            if(!isAriaLabelAttribute(event) && !isAriaLabelBinding(event)){
                 tagAWithoutAriaLabelAttr.push(event);
             }                                               
         };
@@ -38,7 +48,7 @@ HTMLHint.addRule({
         var reportOfTagAWithoutAriaLabelAttr = function() {            
             if (tagAWithoutAriaLabelAttr.length > 0) {
                 for(var item of tagAWithoutAriaLabelAttr) {              
-                    reporter.warn('If the link does not express its clear purpose, should be add "aria-label" attribute. Warn On line: ' + item.line, item.line, item.col, self, item.raw);                                   
+                    reporter.warn('If the link does not express its clear purpose, should be add "aria-label" attribute or bind. Warn On line: ' + item.line, item.line, item.col, self, item.raw);                                   
                 }
             }                                              
         };               
