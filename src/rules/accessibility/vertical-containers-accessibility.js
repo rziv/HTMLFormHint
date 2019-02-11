@@ -1,6 +1,6 @@
 HTMLHint.addRule({
     id: 'vertical-containers-acceessibility',
-    description: 'div wih id "user" should have "setRoleTabList" binding',
+    description: 'div with id "user" should have "setRoleTablist" binding',
     init: function (parser, reporter) {
         var isDivUser = function (event) {
             var id = HTMLHint.utils.getAttributeValue(event.attrs, "id");
@@ -12,12 +12,12 @@ HTMLHint.addRule({
 
         var divUserWithoutSetRoleBinding = function (event) {
             var dataBindings = HTMLHint.utils.getAttributeValue(event.attrs, "data-bind");
-            return isDivUser(event) && !dataBindings.includes('setRoleTabList');
+            return isDivUser(event) && !dataBindings.includes('setRoleTablist');
         };
 
         parser.addListener('tagstart', function (event) {
             if (divUserWithoutSetRoleBinding(event)) {
-                reporter.error('radiogroup container should have role attribute with radiogroup value' , event.line, event.col, self, event.raw);
+                reporter.error('div with id "user" should have "setRoleTablist" binding. Error on line ' , event.line, event.col, self, event.raw);
             }
         });
     }

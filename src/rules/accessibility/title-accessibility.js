@@ -17,17 +17,19 @@ HTMLHint.addRule({
             return HTMLHint.utils.isClassExsits(event.attrs, 'section-title');
         };    
       
-        parser.addListener('tagstart', function(event) {          
-                         
-            if(isTitleElement(event)) {
+        var isSubTitleElement = function(event){
+            return HTMLHint.utils.isClassExsits(event.attrs, 'section-sub-title');
+        }; 
+
+        parser.addListener('tagstart', function(event) {                                   
+            if(isTitleElement(event) || isSubTitleElement(event)) {
                 if(!elementWithHeadingRole(event)){
-                    reporter.error('section-title element should have "role" attribute with "heading" value. Error on line ' + event.line , event.line, event.col, self, event.raw);                    
+                    reporter.error('title element should have "role" attribute with "heading" value. Error on line ' + event.line , event.line, event.col, self, event.raw);                    
                 }  
                 if(!elementWithAriaLevel(event)){
-                    reporter.error('section-title element should have "aria-level" attribute. Error on line ' + event.line , event.line, event.col, self, event.raw);                    
+                    reporter.error('title element should have "aria-level" attribute. Error on line ' + event.line , event.line, event.col, self, event.raw);                    
                 }                   
-            } 
-                      
+            }                       
         });     
     }
 });
