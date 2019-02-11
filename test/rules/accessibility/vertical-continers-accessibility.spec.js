@@ -9,7 +9,7 @@ ruleOptions[ruldId] = true;
 
 describe('Rules: ' + ruldId, function () {
 
-    it('div with id "user" without "setRoleTabList" binding should result in an error', function () {
+    it('div with id "user" without "setRoleTablist" binding should result in an error', function () {
         var code = '<div id="user"><div>';
         var messages = HTMLHint.verify(code, ruleOptions);
         expect(messages.length).to.be(1);
@@ -20,8 +20,8 @@ describe('Rules: ' + ruldId, function () {
 
 
 
-    it('div with id "user" with "setRoleTabList" binding should not result in an error', function () {
-        var code = '<div id="user" data-bind="setRoleTabList:containersViewModel.isDrawsMoe"><div>';
+    it('div with id "user" with "setRoleTablist" binding should not result in an error', function () {
+        var code = '<div id="user" data-bind="setRoleTablist:containersViewModel.isDrawsMoe"><div>';
         var messages = HTMLHint.verify(code, ruleOptions);
         expect(messages.length).to.be(0);
     });
