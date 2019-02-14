@@ -94,7 +94,7 @@ HTMLHint.addRule({
                 }
             }                       
             if(isRemoveRowElement(event)){
-                if(!isAriaLabelledbyAttr(event)){
+                if(!isAriaLabelledbyAttr(event) && !isAriaLabelAttr(event)){
                     reporter.error('Remove row element should contain "aria-labelledby" attribute that bind to span that describe delete row. Error on line ' + event.line , event.line, event.col, self, event.raw);
                 }                
                 if(tagName === 'input' && !isDataToFocusAttr(event)){

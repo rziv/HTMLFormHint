@@ -1,6 +1,6 @@
 HTMLHint.addRule({
     id: 'containers-accessibility',
-    description: 'div with class container should have role of tabPanel and binding addContainersAccessibilityAttrs with the value of "name"',
+    description: 'div with class container should have role of tabPanel and binding addAccessibilityContainerAttrs with the value of "name"',
     init: function (parser, reporter) {
         var self = this;
         var isContainer = function (element, attributes) {
@@ -8,7 +8,7 @@ HTMLHint.addRule({
         };
 
         var isContainerWithoutAccessibilityBinding = function (event) {
-            if (HTMLHint.utils.getBindingValue(event, 'addContainersAccessibilityAttrs') !== 'name') {
+            if (HTMLHint.utils.getBindingValue(event, 'addAccessibilityContainerAttrs') !== 'name') {
                 return true;
             }
             return false;
@@ -24,7 +24,7 @@ HTMLHint.addRule({
                 }
 
                 if (isContainerWithoutAccessibilityBinding(event)) {
-                    reporter.error('div with class container should have "addContainersAccessibilityAttrs" binding with the value "name"', event.line, event.col, self, event.raw);
+                    reporter.error('div with class container should have "addAccessibilityContainerAttrs" binding with the value "name"', event.line, event.col, self, event.raw);
                 }
 
             }

@@ -56,4 +56,20 @@ describe('Rules: '+ruldId, function(){
         var messages = HTMLHint.verify(code, ruleOptions);
         expect(messages.length).to.be(0);
     });
+
+    it('sub title element with sub element with aria-level or role attribute should not result in an error', function(){
+        var code = `<div class="section-sub-title">
+        <div class="content" aria-level="4" role="heading">פרטי חשבון</div>
+        </div>`;
+        var messages = HTMLHint.verify(code, ruleOptions);
+        expect(messages.length).to.be(0);
+    });
+
+    it('sub title element with sub element without aria-level or role attribute should not result in an error', function(){
+        var code = `<div class="section-sub-title">
+        <div class="content" aria-level="4">פרטי חשבון</div>
+        </div>`;
+        var messages = HTMLHint.verify(code, ruleOptions);
+        expect(messages.length).to.be(1);
+    });
 });

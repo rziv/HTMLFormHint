@@ -240,7 +240,7 @@ describe('Rules: '+ruldId, function(){
        expect(messages.length).to.be(0); 
     });
 
-    it('remove row button element without aria-labelledby attribute should result in an error', function(){
+    it('remove row button element without aria-labelledby or aria-label attribute should result in an error', function(){
         var code = `<table tfsdata>
                       <thead></thead>
                       <tbody data-bind="accessibilityTable: contacts">
@@ -285,6 +285,38 @@ describe('Rules: '+ruldId, function(){
                                 <input type="button" class="del-img noPrint" data-bind="removeRow: $parent.dynamicPreviousEmployer"
                                         id="del-PreviousEmployer" aria-labelledby="removeRowSpan" role="button" data-tofocus />
                                 <span aria-labelledby="removeRowSpan" data-bind="removeRow: $parent.dynamicPreviousEmployer">מחק שורה</span>
+                            </span>
+                        </div>
+                      </tr>
+                       <tr>
+                           <td>
+                               <label data-for="firstName">First Name</label>
+                               <input id="firstName"/>
+                           <td>
+                       </tr>
+                      </tbody>
+                   </table>
+                   <input type="button" title="הוסף שורה" value="+ הוסף שורה"
+                   id="Button1" role="button" aria-label="הוסף שורה לטבלת פרטי הילדים"
+                   data-bind="addRow: dynamicChildren, tableModel: 'Children', maxRows: 3, args: { tableId: 'ChildrenTable'}" />`;
+       var messages = HTMLHint.verify(code, ruleOptions);
+       expect(messages.length).to.be(0); 
+    });
+
+    it('remove row button element with aria-label attribute should not result in an error', function(){
+        var code = `<table tfsdata>
+                      <thead></thead>
+                      <tbody data-bind="accessibilityTable: contacts">
+                      <tr>
+                        <div class="table-title-operation">
+                            <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true, tableName:'בטבלת פרטים'" aria-level="4" role="heading"></div>
+                        </div>
+                        <div class="table-title-on-the-left">
+                            <span id="removeRowSpan" class="hide">מחק שורה מטבלת מעסיקים</span>
+                            <span class="delete-line-label">
+                                <input type="button" class="del-img noPrint" data-bind="removeRow: $parent.dynamicPreviousEmployer"
+                                        id="del-PreviousEmployer" aria-label="מחק שורה" role="button" data-tofocus />
+                                <span aria-label="מחק שורה" data-bind="removeRow: $parent.dynamicPreviousEmployer">מחק שורה</span>
                             </span>
                         </div>
                       </tr>
