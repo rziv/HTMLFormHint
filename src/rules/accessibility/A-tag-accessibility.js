@@ -6,7 +6,6 @@ HTMLHint.addRule({
       
         var tagAWithoutAriaLabelAttr = [];
         var tagAWithoutaddDescriptionBind = [];
-        var isExistSpanAccessibility = false;
 
         var isAriaLabelAttribute = function(event){
             var ariaLabelAttribute = HTMLHint.utils.isAttributeExists(event.attrs, 'aria-label');
@@ -31,14 +30,7 @@ HTMLHint.addRule({
             if(addDescriptionBind === false){
                 tagAWithoutaddDescriptionBind.push(event);
             }                                               
-        };
-        
-        var setSpanAccessibilityVariable  = function(event) { 
-            var idAttributeValue = HTMLHint.utils.getAttributeValue(event.attrs, 'id');            
-            if(idAttributeValue === 'accessibilityNewWindowAlert'){
-                isExistSpanAccessibility = true;
-            }                                                                    
-        };  
+        };           
 
         var isLinkOpenInNewWindow = function(event) {            
             var attrValue = HTMLHint.utils.getAttributeValue(event.attrs, 'target');
@@ -60,12 +52,6 @@ HTMLHint.addRule({
                 }
             }                                                        
         }; 
-
-        var reportOfAccessibilityNewWindowAlertSpan = function(event) {  
-            if (isExistSpanAccessibility === false) {                            
-                reporter.error('The form should contain accessibility span with id "accessibilityNewWindowAlert" and value "This link open in new window..." ' + event.line, event.line, event.col, self, event.raw);                               
-            }                                                        
-        };      
        
         parser.addListener('tagstart', function(event) {          
             var tagName = event.tagName.toLowerCase();
@@ -74,10 +60,7 @@ HTMLHint.addRule({
                 if(isLinkOpenInNewWindow(event)) {
                     addElementWithoutAddDesriptionBindToArray(event);                   
                 } 
-            }
-            if(tagName === 'span') {
-                setSpanAccessibilityVariable(event);  
-            }
+            }           
         });
      
         parser.addListener('tagend', function(event){
@@ -85,7 +68,6 @@ HTMLHint.addRule({
             if(tagName === 'body'){   
                 reportOfTagAWithoutAriaLabelAttr(); 
                 reportOfTagAWithoutAddDescriptionBind();
-                reportOfAccessibilityNewWindowAlertSpan(event);
             }                                  
         }); 
     }
