@@ -54,6 +54,11 @@ HTMLHint.addRule({
             return bindAttributeValue.includes('addRow');
         };
 
+        var isRolePresentation = function(event){
+            var roleAttributeValue = HTMLHint.utils.getAttributeValue(event.attrs, 'role');
+            return roleAttributeValue === 'presentation';
+        };
+
         var isAriaLabelAttr = function(event) {            
             return HTMLHint.utils.isAttributeExists(event.attrs, 'aria-label');                                             
         };    
@@ -102,6 +107,9 @@ HTMLHint.addRule({
                 }
             }             
             if (HTMLHint.utils.isDynamicTable(tagName,event.attrs)  && !event.close){
+                if(!isRolePresentation(event)){
+                    reporter.error('add role=presentation to table tag. Error on line ' + event.line , event.line, event.col, self, event.raw);
+                }  
                unclosedTablesCounter++;
                inTable = true;
             }    

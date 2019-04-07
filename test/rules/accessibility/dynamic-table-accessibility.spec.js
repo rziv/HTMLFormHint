@@ -10,7 +10,7 @@ ruleOptions[ruldId] = true;
 describe('Rules: '+ruldId, function(){
 
     it('dynamic table without accessibilityTable binding should not result in an error', function(){
-         var code = `<table tfsdata>
+         var code = `<table role="presentation" tfsdata>
                        <thead></thead>
                        <tbody>
                        <tr>
@@ -31,7 +31,7 @@ describe('Rules: '+ruldId, function(){
     });
 
     it('dynamic table with perefect structure should not result in an error', function(){
-         var code = `<table tfsdata>
+         var code = `<table role="presentation" tfsdata>
                        <thead></thead>
                        <tbody data-bind="accessibilityTable: contacts">
                        <tr>
@@ -51,8 +51,29 @@ describe('Rules: '+ruldId, function(){
         expect(messages.length).to.be(0); 
     });
 
+    it('dynamic table without role=presentation should result in an error', function(){
+        var code = `<table tfsdata>
+                      <thead></thead>
+                      <tbody data-bind="accessibilityTable: contacts">
+                      <tr>
+                           <div class="table-title-operation">
+                               <div class="accessibility-table-title" data-bind="accessibilityRowTitle:true, tableName:'בטבלת פרטים'" aria-level="4" role="heading"></div>
+                           </div>
+                      </tr>
+                       <tr>
+                           <td>
+                               <label data-for="firstName">First Name</label>
+                               <input id="firstName"/>
+                           <td>
+                       </tr>
+                      </tbody>
+                   </table>`;
+       var messages = HTMLHint.verify(code, ruleOptions);
+       expect(messages.length).to.be(1); 
+   });
+
     it('dynamic table without div with accessibility-table-title class should result in an error', function(){
-         var code = `<table tfsdata>
+         var code = `<table role="presentation" tfsdata>
                        <thead></thead>
                        <tbody data-bind="accessibilityTable: contacts">
                        <tr>
@@ -72,7 +93,7 @@ describe('Rules: '+ruldId, function(){
     });
 
     it('accessibility-table-title element without aria-level attribute should result in an error', function(){
-         var code = `<table tfsdata>
+         var code = `<table role="presentation" tfsdata>
                        <thead></thead>
                        <tbody data-bind="accessibilityTable: contacts">
                        <tr>
@@ -93,7 +114,7 @@ describe('Rules: '+ruldId, function(){
     });
 
     it('accessibility-table-title element without role attribute with heading value should result in an error', function(){
-         var code = `<table tfsdata>
+         var code = `<table role="presentation" tfsdata>
                        <thead></thead>
                        <tbody data-bind="accessibilityTable: contacts">
                        <tr>
@@ -114,7 +135,7 @@ describe('Rules: '+ruldId, function(){
     });
 
     it('accessibility-table-title element without accessibilityRowTitle binding should result in an error', function(){
-         var code = `<table tfsdata>
+         var code = `<table role="presentation" tfsdata>
                        <thead></thead>
                        <tbody data-bind="accessibilityTable: contacts">
                        <tr>
@@ -135,7 +156,7 @@ describe('Rules: '+ruldId, function(){
     });
 
     it('accessibility-table-title element without tableName binding should result in an error', function(){
-        var code = `<table tfsdata>
+        var code = `<table role="presentation" tfsdata>
         <thead></thead>
         <tbody data-bind="accessibilityTable: contacts">
         <tr>
@@ -156,7 +177,7 @@ describe('Rules: '+ruldId, function(){
     });
 
     it('accessibility-table-title element with tableName binding should not result in an error', function(){
-        var code = `<table tfsdata>
+        var code = `<table role="presentation" tfsdata>
         <thead></thead>
         <tbody data-bind="accessibilityTable: contacts">
         <tr>
@@ -177,7 +198,7 @@ describe('Rules: '+ruldId, function(){
     });
 
     it('add row button element without aria-Label attribute should result in an error', function(){
-        var code = `<table tfsdata>
+        var code = `<table role="presentation" tfsdata>
                       <thead></thead>
                       <tbody data-bind="accessibilityTable: contacts">
                       <tr>
@@ -209,7 +230,7 @@ describe('Rules: '+ruldId, function(){
     });
     
     it('add row button element with aria-Label attribute should not result in an error', function(){
-        var code = `<table tfsdata>
+        var code = `<table role="presentation" tfsdata>
                       <thead></thead>
                       <tbody data-bind="accessibilityTable: contacts">
                       <tr>
@@ -241,7 +262,7 @@ describe('Rules: '+ruldId, function(){
     });
 
     it('remove row button element without aria-labelledby or aria-label attribute should result in an error', function(){
-        var code = `<table tfsdata>
+        var code = `<table role="presentation" tfsdata>
                       <thead></thead>
                       <tbody data-bind="accessibilityTable: contacts">
                       <tr>
@@ -272,7 +293,7 @@ describe('Rules: '+ruldId, function(){
     });
     
     it('remove row button element with aria-labelledby attribute should not result in an error', function(){
-        var code = `<table tfsdata>
+        var code = `<table role="presentation" tfsdata>
                       <thead></thead>
                       <tbody data-bind="accessibilityTable: contacts">
                       <tr>
@@ -304,7 +325,7 @@ describe('Rules: '+ruldId, function(){
     });
 
     it('remove row button element with aria-label attribute should not result in an error', function(){
-        var code = `<table tfsdata>
+        var code = `<table role="presentation" tfsdata>
                       <thead></thead>
                       <tbody data-bind="accessibilityTable: contacts">
                       <tr>
@@ -336,7 +357,7 @@ describe('Rules: '+ruldId, function(){
     });
 
     it('remove row button element without data-tofocus attribute should result in an error', function(){
-        var code = `<table tfsdata>
+        var code = `<table role="presentation" tfsdata>
                       <thead></thead>
                       <tbody data-bind="accessibilityTable: contacts">
                       <tr>
@@ -368,7 +389,7 @@ describe('Rules: '+ruldId, function(){
     });
     
     it('remove row button element with data-tofocus attribute should not result in an error', function(){
-        var code = `<table tfsdata>
+        var code = `<table role="presentation" tfsdata>
                       <thead></thead>
                       <tbody data-bind="accessibilityTable: contacts">
                       <tr>
@@ -401,7 +422,7 @@ describe('Rules: '+ruldId, function(){
 
     describe('Dynamic table with inner table: ', function(){
         it('inner dynamic table without accessibilityTable binding should result in an error', function(){
-            var code = `<table tfsdata>
+            var code = `<table role="presentation" tfsdata>
                         <thead></thead>
                         <tbody data-bind="accessibilityTable: contacts">
                             <tr>
@@ -415,7 +436,7 @@ describe('Rules: '+ruldId, function(){
                                     <input id="firstName"/>
                                 <td>
                             </tr>
-                            <table tfsnestedtable>
+                            <table role="presentation" tfsnestedtable>
                                 <thead></thead>
                                 <tbody>
                                     <tr>
@@ -438,7 +459,7 @@ describe('Rules: '+ruldId, function(){
         });
 
         it('inner dynamic table with perefect structure should not result in an error', function(){
-            var code = `<table tfsdata>
+            var code = `<table role="presentation" tfsdata>
                         <thead></thead>
                         <tbody data-bind="accessibilityTable: contacts">
                             <tr>
@@ -452,7 +473,7 @@ describe('Rules: '+ruldId, function(){
                                     <input id="firstName"/>
                                 <td>
                             </tr>
-                            <table tfsnestedtable>
+                            <table role="presentation" tfsnestedtable>
                                 <thead></thead>
                                 <tbody data-bind="accessibilityTable: contacts">
                                     <tr>
@@ -475,7 +496,7 @@ describe('Rules: '+ruldId, function(){
         });
 
         it('inner dynamic table without div with accessibility-table-title class should result in an error', function(){
-            var code = `<table tfsdata>
+            var code = `<table role="presentation" tfsdata>
                         <thead></thead>
                         <tbody data-bind="accessibilityTable: contacts">
                             <tr>
@@ -489,7 +510,7 @@ describe('Rules: '+ruldId, function(){
                                     <input id="firstName"/>
                                 <td>
                             </tr>
-                            <table tfsnestedtable>
+                            <table role="presentation" tfsnestedtable>
                                 <thead></thead>
                                 <tbody data-bind="accessibilityTable: contacts">
                                     <tr>
@@ -510,7 +531,7 @@ describe('Rules: '+ruldId, function(){
         });
 
         it('inner accessibility-table-title element without aria-level attribute should result in an error', function(){
-            var code = `<table tfsdata>
+            var code = `<table role="presentation" tfsdata>
                         <thead></thead>
                         <tbody data-bind="accessibilityTable: contacts">
                             <tr>
@@ -524,7 +545,7 @@ describe('Rules: '+ruldId, function(){
                                     <input id="firstName"/>
                                 <td>
                             </tr>
-                            <table tfsnestedtable>
+                            <table role="presentation" tfsnestedtable>
                                 <thead></thead>
                                 <tbody data-bind="accessibilityTable: contacts">
                                     <tr>
@@ -547,7 +568,7 @@ describe('Rules: '+ruldId, function(){
         });
 
         it('inner accessibility-table-title element without role attribute with heading value should result in an error', function(){
-            var code =`<table tfsdata>
+            var code =`<table role="presentation" tfsdata>
                         <thead></thead>
                         <tbody data-bind="accessibilityTable: contacts">
                             <tr>
@@ -561,7 +582,7 @@ describe('Rules: '+ruldId, function(){
                                     <input id="firstName"/>
                                 <td>
                             </tr>
-                            <table tfsnestedtable>
+                            <table role="presentation" tfsnestedtable>
                                 <thead></thead>
                                 <tbody data-bind="accessibilityTable: contacts">
                                     <tr>
@@ -584,7 +605,7 @@ describe('Rules: '+ruldId, function(){
         });
 
         it('inner accessibility-table-title element without accessibilityRowTitle binding should result in an error', function(){
-            var code = `<table tfsdata>
+            var code = `<table role="presentation" tfsdata>
                             <thead></thead>
                             <tbody data-bind="accessibilityTable: contacts">
                                 <tr>
@@ -598,7 +619,7 @@ describe('Rules: '+ruldId, function(){
                                         <input id="firstName"/>
                                     <td>
                                 </tr>
-                                <table tfsnestedtable>
+                                <table role="presentation" tfsnestedtable>
                                     <thead></thead>
                                     <tbody data-bind="accessibilityTable: contacts">
                                         <tr>
@@ -621,7 +642,7 @@ describe('Rules: '+ruldId, function(){
         });
         
         it('inner add row button element without aria-Label attribute should result in an error', function(){
-            var code = `<table tfsdata>
+            var code = `<table role="presentation" tfsdata>
                           <thead></thead>
                           <tbody data-bind="accessibilityTable: contacts">
                           <tr>
@@ -645,7 +666,7 @@ describe('Rules: '+ruldId, function(){
         });
         
         it('inner add row button element with aria-Label attribute should not result in an error', function(){
-            var code = `<table tfsdata>
+            var code = `<table role="presentation" tfsdata>
                           <thead></thead>
                           <tbody data-bind="accessibilityTable: contacts">
                           <tr>
