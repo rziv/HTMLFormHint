@@ -10,11 +10,11 @@ HTMLHint.addRule({
         };
 
         var isJQueryUIAttribute = function(event) {
-            return HTMLHint.utils.isAttributeExists(event.attrs, 'tfsJQueryUIVersion');            
+            return HTMLHint.utils.isAttributeExists(event.attrs, 'tfsjqueryuiversion');            
         };
 
         var isJQueryUIAttributeValue = function(event) {
-            return HTMLHint.utils.getAttributeValue(event.attrs, 'tfsJQueryUIVersion');                      
+            return HTMLHint.utils.getAttributeValue(event.attrs, 'tfsjqueryuiversion');                      
         };
 
         var isjQueryUIAttributMissing = function(event) {            
@@ -30,10 +30,10 @@ HTMLHint.addRule({
             if(tagName === 'span') {    
                 if (isGeneralAttributSpan(event)) {
                     if (isjQueryUIAttributMissing(event)) {
-                        reporter.error('attribute "tfsJQueryUIVersion" in GeneralAttributes is missing. Error on line ' + event.line, event.line, event.col, self, event.raw);                
+                        reporter.error('attribute "tfsjqueryuiversion" in GeneralAttributes is missing. Error on line ' + event.line, event.line, event.col, self, event.raw);                
                     }
                     else if (isJQueryUIVersionNotApdate(event)) {
-                        reporter.error('attribute "tfsJQueryUIVersion" in GeneralAttributes should be equal "1_12_1". Error on line ' + event.line, event.line, event.col, self, event.raw);                     
+                        reporter.error('attribute "tfsjqueryuiversion" in GeneralAttributes should be equal "1_12_1". Error on line ' + event.line, event.line, event.col, self, event.raw);                     
                     }
                 }         
             }  

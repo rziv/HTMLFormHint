@@ -56,7 +56,7 @@ describe('Rules: ' + ruldId, function () {
     it('tooltip with described element in same div should not result in an error', function () {
         var code = `<div>
                      ${tooltip}
-                    <input data-bind='addDescription:"input description",lock:true' />
+                    <input data-bind="addDescription:'input description',lock:true" />
                     </div>`;
         var messages = HTMLHint.verify(code, ruleOptions);
         expect(messages.length).to.be(0);

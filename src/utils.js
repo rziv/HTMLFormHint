@@ -33,7 +33,7 @@
     };
 
     const removeBoundaryQuotes = function (str) {
-        return str.replace(/(^")|("$)/g, '');
+        return str.replace(/(^")|("$)|(^')|('$)/g, '');
     };
 
     const getAttributeValue = function (attributes, attributeName) {

@@ -1,6 +1,6 @@
 {
   "name": "htmlformhint",
-  "version": "1.2.72",
+  "version": "1.2.73",
   "description": "A Static Code Analysis Tool for HTML",
   "main": "./index",
   "dependencies": {

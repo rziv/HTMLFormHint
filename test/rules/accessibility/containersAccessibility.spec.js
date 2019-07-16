@@ -5,7 +5,7 @@ var HTMLHint = require("../../../index").HTMLHint;
 var ruldId = 'containers-accessibility',
     ruleOptions = {};
 
-var noAccessibilityBindingError = 'div with class container should have "addAccessibilityContainerAttrs" binding with the value "name"';
+var noAccessibilityBindingError = 'div with class container should have "addAccessibilityContainerAttrs" binding with "name" value';
 
 ruleOptions[ruldId] = true;
 
