@@ -10,7 +10,7 @@ ruleOptions[ruldId] = true;
 describe('Rules: '+ruldId, function(){
   
     it('radiogroup container without aria-labelledby attribute should result in an error', function(){
-        var code = `<div class="radiogroupContainer">
+        var code = `<div class="radio">
                         <div class="inline-element"><input tfsdata id="private" name="type" type="radio" data-bind="radioGroupAccessibility: true"/></div>
                         <div class="inline-element"><input tfsdata id="pulic" name="type" type="radio" data-bind="radioGroupAccessibility: true"/></div>                        
                     </div>`;

@@ -10,6 +10,7 @@ HTMLHint.addRule({
             return tagName === 'span' && hasTooltipClass;
         };
 
+        
         var findBoundTooltipInDescription = function (description) {
             var descriptionsIds = HTMLHint.utils.removeBoundaryQuotes(description).split(' ');
 

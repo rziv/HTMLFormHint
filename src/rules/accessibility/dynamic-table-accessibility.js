@@ -125,7 +125,7 @@ HTMLHint.addRule({
             if (tagName === "table" && unclosedTablesCounter>0) {
                 unclosedTablesCounter--;
                 if(!isExistAccessibilityTitleElement[unclosedTablesCounter]){
-                    reporter.error('dynamic table title should have div with accessibility-table-title class. Error on line ' + event.line , event.line, event.col, self, event.raw);
+                    reporter.error('dynamic table title should have div with "accessibility-table-title" class (under "table-title-operation" div). Error on line ' + event.line , event.line, event.col, self, event.raw);
                 }                            
             }
             if (tagName === "div" && unclosedDivsCounter>0) {

@@ -12,10 +12,22 @@ HTMLHint.addRule({
         }; 
     
         var isAccessibilityScript = function(event) {
-            var accessibilityScript = srcScripts.includes('CDN/Common/JS/accessibility.js');   
-            var accessibilityMethodsScript = srcScripts.includes('CDN/Common/JS/accessibilityMethods.js');   
-            if(accessibilityScript === false || accessibilityMethodsScript === false) {
-                reporter.error('the form should contain "accessibility.js" and "accessibilityMethods.js" scripts. Error on line ' + event.line , event.line, event.col, self, event.raw);
+            var accessibilitySrc = srcScripts.includes('CDN/Common/JS/accessibility.js');   
+            var accessibilityMethodsSrc = srcScripts.includes('CDN/Common/JS/accessibilityMethods.js');   
+            var accessibilitySrcWithBackSlesh = srcScripts.includes('CDN\Common\JS\accessibility.js');   
+            var accessibilityMethodsSrctWithBackSlesh = srcScripts.includes('CDN\Common\JS\accessibilityMethods.js'); 
+            
+            var accessibilityScriptExist = function(){
+                return accessibilitySrc === true || accessibilitySrcWithBackSlesh === true;
+            };
+            var accessibilityMethodScriptExist = function(){
+                return accessibilityMethodsSrc === true || accessibilityMethodsSrctWithBackSlesh === true;
+            };
+            if(!accessibilityScriptExist()) {
+                reporter.error('the form should contain "accessibility.js" script. Error on line ' + event.line , event.line, event.col, self, event.raw);
+            }
+            if(!accessibilityMethodScriptExist()) {
+                reporter.error('the form should contain "accessibilityMethods.js" script. Error on line ' + event.line , event.line, event.col, self, event.raw);
             }
         }; 
          

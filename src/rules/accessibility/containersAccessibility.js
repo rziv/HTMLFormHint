@@ -24,7 +24,7 @@ HTMLHint.addRule({
                 }
 
                 if (isContainerWithoutAccessibilityBinding(event)) {
-                    reporter.error('div with class container should have "addAccessibilityContainerAttrs" binding with the value "name"', event.line, event.col, self, event.raw);
+                    reporter.error('div with class container should have "addAccessibilityContainerAttrs" binding with "name" value', event.line, event.col, self, event.raw);
                 }
 
             }
