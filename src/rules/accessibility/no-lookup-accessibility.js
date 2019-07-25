@@ -14,7 +14,7 @@ HTMLHint.addRule({
             var tagName = event.tagName.toLowerCase();            
             if(tagName === 'select') {
                if(isLookUpWindow(event)){
-                reporter.error('select with tfsdatatype="LookUpWindow" should replace to Autocomplete" ' + event.line, event.col, self, event.raw);         
+                reporter.error('select with tfsdatatype="LookUpWindow" should replace to Autocomplete" ', event.line, event.col, self, event.raw);  
                }  
             }
         });   
